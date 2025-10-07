@@ -18,10 +18,8 @@
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 
-            <div class="flex">
-                @include('layouts.sidebar')
-
-                <div class="flex-1">
+            <div>
+                <div>
                     <!-- Page Heading -->
                     @isset($header)
                         <header class="bg-white dark:bg-gray-800 shadow">
