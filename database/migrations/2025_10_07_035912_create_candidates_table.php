@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('photo')->nullable();
+            $table->text('vision')->nullable();
+            $table->text('mission')->nullable();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->timestamps();
         });
     }
