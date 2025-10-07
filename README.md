@@ -7,7 +7,55 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## Voting Ketua RT - Laravel + Blade + PostgreSQL
+
+### Persyaratan
+- PHP 8.2+
+- Composer
+- Node.js 18+
+- PostgreSQL 14+ (opsional: gunakan docker-compose)
+
+### Setup Cepat
+1. Clone repo dan masuk folder
+2. Salin `.env` dari `.env.example`, lalu set:
+   - `DB_CONNECTION=pgsql`
+   - `DB_HOST=127.0.0.1`
+   - `DB_PORT=5432`
+   - `DB_DATABASE=voting_ketua_rt`
+   - `DB_USERNAME=postgres`
+   - `DB_PASSWORD=postgres`
+3. Install dependency dan scaffold auth Breeze (sudah diinstall)
+   - `composer install`
+   - `npm install && npm run build`
+4. Jalankan PostgreSQL (opsi Docker):
+   - `docker compose up -d`
+5. Generate key, migrate, seed, dan storage link:
+   - `php artisan key:generate`
+   - `php artisan migrate --seed`
+   - `php artisan storage:link`
+6. Jalankan dev server: `php artisan serve`
+
+Credensial admin default: `admin@example.com` / `admin123`
+
+### Workflow Git
+- Repo sudah di-inisialisasi dengan cabang `main` dan remote `origin` ke GitHub.
+- Setiap kali `git commit`, hook `post-commit` otomatis menjalankan `git push -u origin <current-branch>`.
+- Langkah umum:
+  - `git add -A`
+  - `git commit -m "feat: perubahan ..."`
+  - (auto push berjalan)
+
+### Fitur Utama
+- Admin: CRUD kategori, CRUD kandidat (upload foto), lihat hasil voting (Chart.js)
+- User: Register/Login, lihat kategori, pilih kandidat (1x per kategori), lihat detail kandidat
+- Middleware role `role:admin` membatasi akses admin
+
+### Struktur DB
+- users: id, name, email, password, role
+- categories: id, name
+- candidates: id, name, photo, vision, mission, category_id
+- votes: id, user_id, candidate_id, category_id, timestamps; unique(user_id, category_id)
+
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 

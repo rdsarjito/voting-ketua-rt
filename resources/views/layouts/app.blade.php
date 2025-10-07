@@ -18,19 +18,38 @@
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+            <div class="flex">
+                <aside class="w-64 bg-white dark:bg-gray-800 min-h-screen p-4 hidden md:block">
+                    <div class="space-y-2">
+                        <a href="{{ route('dashboard') }}" class="block text-gray-700 dark:text-gray-200">Dashboard</a>
+                        <a href="{{ route('vote.categories') }}" class="block text-gray-700 dark:text-gray-200">Kategori Voting</a>
+                        @auth
+                        @if(auth()->user()->role === 'admin')
+                        <hr class="my-2 border-gray-600" />
+                        <a href="{{ route('admin.categories.index') }}" class="block text-gray-700 dark:text-gray-200">Kelola Kategori</a>
+                        <a href="{{ route('admin.candidates.index') }}" class="block text-gray-700 dark:text-gray-200">Kelola Kandidat</a>
+                        <a href="{{ route('admin.results') }}" class="block text-gray-700 dark:text-gray-200">Hasil Voting</a>
+                        @endif
+                        @endauth
                     </div>
-                </header>
-            @endisset
+                </aside>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+                <div class="flex-1">
+                    <!-- Page Heading -->
+                    @isset($header)
+                        <header class="bg-white dark:bg-gray-800 shadow">
+                            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                                {{ $header }}
+                            </div>
+                        </header>
+                    @endisset
+
+                    <!-- Page Content -->
+                    <main class="p-4">
+                        {{ $slot }}
+                    </main>
+                </div>
+            </div>
         </div>
     </body>
 </html>
