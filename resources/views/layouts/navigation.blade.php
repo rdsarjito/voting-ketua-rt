@@ -15,6 +15,22 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('vote.categories')" :active="request()->routeIs('vote.categories')">
+                        {{ __('Kategori Voting') }}
+                    </x-nav-link>
+                    @auth
+                        @if(auth()->user()->role === 'admin')
+                            <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+                                {{ __('Kategori') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.candidates.index')" :active="request()->routeIs('admin.candidates.*')">
+                                {{ __('Kandidat') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.results')" :active="request()->routeIs('admin.results')">
+                                {{ __('Hasil') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
                 </div>
             </div>
 
@@ -70,6 +86,22 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('vote.categories')" :active="request()->routeIs('vote.categories')">
+                {{ __('Kategori Voting') }}
+            </x-responsive-nav-link>
+            @auth
+                @if(auth()->user()->role === 'admin')
+                    <x-responsive-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+                        {{ __('Kelola Kategori') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.candidates.index')" :active="request()->routeIs('admin.candidates.*')">
+                        {{ __('Kelola Kandidat') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.results')" :active="request()->routeIs('admin.results')">
+                        {{ __('Hasil Voting') }}
+                    </x-responsive-nav-link>
+                @endif
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->
