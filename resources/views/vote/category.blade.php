@@ -30,11 +30,13 @@
                 <div class="text-sm">{{ $candidate->mission }}</div>
             </div>
 
+            @if(!$existingVote)
             <form method="POST" action="{{ route('vote.store', $candidate) }}" class="mt-4">
                 @csrf
                 <input type="hidden" name="category_id" value="{{ $category->id }}" />
-                <button class="px-3 py-2 rounded {{ $existingVote ? 'bg-gray-600 text-white cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white' }}" {{ $existingVote ? 'disabled' : '' }} onclick="return {{ $existingVote ? 'false' : 'confirm(\'Pilih '.$candidate->name.'?\')' }}">{{ $existingVote ? 'Sudah memilih' : 'Pilih' }}</button>
+                <button class="px-3 py-2 bg-blue-600 text-white rounded" onclick="return confirm('Pilih {{ $candidate->name }}?')">Pilih</button>
             </form>
+            @endif
         </div>
         @endforeach
     </div>
