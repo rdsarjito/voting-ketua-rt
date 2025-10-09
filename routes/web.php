@@ -30,6 +30,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('categories', CategoryController::class);
     Route::resource('candidates', CandidateController::class);
     Route::get('results', [VoteController::class, 'results'])->name('results');
+    Route::get('results/export', [VoteController::class, 'exportResults'])->name('results.export');
 });
 
 require __DIR__.'/auth.php';

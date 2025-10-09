@@ -6,6 +6,7 @@ use App\Models\Candidate;
 use App\Models\Category;
 use App\Models\Vote;
 use Illuminate\Http\RedirectResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -64,5 +65,36 @@ class VoteController extends Controller
             ->get();
 
         return view('admin.results', compact('results'));
+    }
+
+    public function exportResults(): StreamedResponse
+    {
+        $filename = 'voting_results_'.now()->format('Ymd_His').'.csv';
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        $callback = function () {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, ['Category', 'Candidate', 'Total Votes']);
+
+            $rows = Vote::selectRaw('candidate_id, count(*) as total')
+                ->groupBy('candidate_id')
+                ->with('candidate:id,name,category_id', 'candidate.category:id,name')
+                ->get();
+
+            foreach ($rows as $row) {
+                fputcsv($handle, [
+                    $row->candidate->category->name ?? '-',
+                    $row->candidate->name ?? '-',
+                    (int) $row->total,
+                ]);
+            }
+
+            fclose($handle);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }

@@ -4,6 +4,9 @@
     </x-slot>
 
     <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+        <div class="mb-4">
+            <a href="{{ route('admin.results.export') }}" class="px-3 py-2 bg-blue-600 text-white rounded">Export CSV</a>
+        </div>
         <canvas id="resultsChart" height="120"></canvas>
     </div>
 
