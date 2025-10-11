@@ -29,6 +29,9 @@
                             <x-nav-link :href="route('admin.results')" :active="request()->routeIs('admin.results')">
                                 {{ __('Hasil') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                                {{ __('User') }}
+                            </x-nav-link>
                         @endif
                     @endauth
                 </div>
@@ -99,6 +102,9 @@
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.results')" :active="request()->routeIs('admin.results')">
                         {{ __('Hasil Voting') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
+                        {{ __('Manajemen User') }}
                     </x-responsive-nav-link>
                 @endif
             @endauth

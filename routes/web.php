@@ -29,8 +29,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('candidates', CandidateController::class);
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
     Route::get('results', [VoteController::class, 'results'])->name('results');
     Route::get('results/export', [VoteController::class, 'exportResults'])->name('results.export');
+    Route::post('users/{user}/reset-password', [\App\Http\Controllers\Admin\UserController::class, 'resetPassword'])->name('users.reset-password');
+    Route::post('users/{user}/toggle-status', [\App\Http\Controllers\Admin\UserController::class, 'toggleStatus'])->name('users.toggle-status');
 });
 
 require __DIR__.'/auth.php';
