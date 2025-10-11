@@ -14,12 +14,19 @@ class VoteController extends Controller
 {
     public function categories(): View
     {
-        $categories = Category::withCount('candidates')->orderBy('name')->get();
+        $categories = Category::withCount('candidates')
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
         return view('vote.categories', compact('categories'));
     }
 
     public function showCategory(Category $category): View
     {
+        if (!$category->is_active) {
+            abort(404, 'Kategori tidak aktif');
+        }
+        
         $category->load('candidates');
         $existingVote = Vote::where('user_id', auth()->id())
             ->where('category_id', $category->id)
@@ -35,6 +42,12 @@ class VoteController extends Controller
 
         $userId = $request->user()->id;
         $categoryId = (int) $request->input('category_id');
+        $category = Category::find($categoryId);
+
+        // Check if voting is open for this category
+        if (!$category->isVotingOpen()) {
+            return back()->withErrors(['vote' => 'Voting untuk kategori ini belum dibuka atau sudah ditutup.']);
+        }
 
         $alreadyVoted = Vote::where('user_id', $userId)
             ->where('category_id', $categoryId)

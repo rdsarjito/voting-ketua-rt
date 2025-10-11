@@ -34,7 +34,13 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:categories,name'],
+            'voting_start' => ['nullable', 'date'],
+            'voting_end' => ['nullable', 'date', 'after_or_equal:voting_start'],
+            'is_active' => ['boolean'],
         ]);
+        
+        $data['is_active'] = $request->has('is_active');
+        
         Category::create($data);
         return redirect()->route('admin.categories.index')->with('status', 'Kategori dibuat.');
     }
@@ -62,7 +68,13 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:categories,name,'.$category->id],
+            'voting_start' => ['nullable', 'date'],
+            'voting_end' => ['nullable', 'date', 'after_or_equal:voting_start'],
+            'is_active' => ['boolean'],
         ]);
+        
+        $data['is_active'] = $request->has('is_active');
+        
         $category->update($data);
         return redirect()->route('admin.categories.index')->with('status', 'Kategori diperbarui.');
     }
