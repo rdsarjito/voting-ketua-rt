@@ -32,6 +32,9 @@
                             <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                                 {{ __('User') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('admin.emails.index')" :active="request()->routeIs('admin.emails.*')">
+                                {{ __('Email') }}
+                            </x-nav-link>
                         @endif
                     @endauth
                 </div>
@@ -105,6 +108,9 @@
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                         {{ __('Manajemen User') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.emails.index')" :active="request()->routeIs('admin.emails.*')">
+                        {{ __('Kirim Email') }}
                     </x-responsive-nav-link>
                 @endif
             @endauth

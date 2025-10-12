@@ -34,6 +34,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('results/export', [VoteController::class, 'exportResults'])->name('results.export');
     Route::post('users/{user}/reset-password', [\App\Http\Controllers\Admin\UserController::class, 'resetPassword'])->name('users.reset-password');
     Route::post('users/{user}/toggle-status', [\App\Http\Controllers\Admin\UserController::class, 'toggleStatus'])->name('users.toggle-status');
+    Route::get('emails', [\App\Http\Controllers\Admin\EmailController::class, 'index'])->name('emails.index');
+    Route::post('emails/reminder', [\App\Http\Controllers\Admin\EmailController::class, 'sendReminder'])->name('emails.reminder');
+    Route::post('emails/results', [\App\Http\Controllers\Admin\EmailController::class, 'sendResults'])->name('emails.results');
 });
 
 require __DIR__.'/auth.php';

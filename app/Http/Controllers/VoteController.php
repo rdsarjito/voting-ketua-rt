@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Candidate;
 use App\Models\Category;
 use App\Models\Vote;
+use App\Mail\VoteConfirmationMail;
 use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Mail;
 
 class VoteController extends Controller
 {
@@ -61,13 +63,16 @@ class VoteController extends Controller
             return back()->withErrors(['vote' => 'Kandidat tidak sesuai dengan kategori.']);
         }
 
-        Vote::create([
+        $vote = Vote::create([
             'user_id' => $userId,
             'candidate_id' => $candidate->id,
             'category_id' => $categoryId,
         ]);
 
-        return back()->with('status', 'Vote berhasil disimpan.');
+        // Send confirmation email
+        Mail::to($request->user()->email)->send(new VoteConfirmationMail($request->user(), $candidate));
+
+        return back()->with('status', 'Vote berhasil disimpan. Email konfirmasi telah dikirim.');
     }
 
     public function results(): View
