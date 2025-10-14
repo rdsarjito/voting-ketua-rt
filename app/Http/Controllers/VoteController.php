@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Mail;
+use App\Models\AuditLog;
 
 class VoteController extends Controller
 {
@@ -68,6 +69,26 @@ class VoteController extends Controller
             'candidate_id' => $candidate->id,
             'category_id' => $categoryId,
         ]);
+
+        // Audit log
+        try {
+            AuditLog::create([
+                'user_id' => $userId,
+                'action' => 'vote',
+                'model_type' => Vote::class,
+                'model_id' => $vote->id,
+                'route' => $request->route()->getName(),
+                'method' => $request->method(),
+                'ip' => $request->ip(),
+                'user_agent' => substr((string) $request->userAgent(), 0, 500),
+                'data' => [
+                    'category_id' => $categoryId,
+                    'candidate_id' => $candidate->id,
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            // ignore
+        }
 
         // Send confirmation email
         Mail::to($request->user()->email)->send(new VoteConfirmationMail($request->user(), $candidate));

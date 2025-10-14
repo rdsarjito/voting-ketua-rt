@@ -22,11 +22,11 @@ Route::middleware('auth')->group(function () {
     // User voting routes
     Route::get('/categories', [VoteController::class, 'categories'])->name('vote.categories');
     Route::get('/categories/{category}', [VoteController::class, 'showCategory'])->name('vote.category.show');
-    Route::post('/vote/{candidate}', [VoteController::class, 'store'])->name('vote.store');
+    Route::post('/vote/{candidate}', [VoteController::class, 'store'])->middleware('audit')->name('vote.store');
 });
 
 // Admin routes
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'role:admin', 'audit'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('candidates', CandidateController::class);
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
@@ -37,6 +37,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('emails', [\App\Http\Controllers\Admin\EmailController::class, 'index'])->name('emails.index');
     Route::post('emails/reminder', [\App\Http\Controllers\Admin\EmailController::class, 'sendReminder'])->name('emails.reminder');
     Route::post('emails/results', [\App\Http\Controllers\Admin\EmailController::class, 'sendResults'])->name('emails.results');
+    Route::get('audit-logs', [\App\Http\Controllers\Admin\AuditLogController::class, 'index'])->name('audit-logs.index');
 });
 
 require __DIR__.'/auth.php';

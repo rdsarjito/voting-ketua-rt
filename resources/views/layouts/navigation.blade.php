@@ -35,6 +35,9 @@
                             <x-nav-link :href="route('admin.emails.index')" :active="request()->routeIs('admin.emails.*')">
                                 {{ __('Email') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('admin.audit-logs.index')" :active="request()->routeIs('admin.audit-logs.*')">
+                                {{ __('Audit Log') }}
+                            </x-nav-link>
                         @endif
                     @endauth
                 </div>
