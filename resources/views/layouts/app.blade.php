@@ -29,7 +29,21 @@
 
             <!-- Page Content -->
             <main class="p-4">
-                {{ $slot }}
+                <div class="max-w-7xl mx-auto space-y-4">
+                    @if (session('status'))
+                        <div class="p-3 rounded bg-green-100 text-green-800 border border-green-200">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    @if ($errors->any())
+                        <div class="p-3 rounded bg-red-100 text-red-800 border border-red-200">
+                            {{ $errors->first() }}
+                        </div>
+                    @endif
+
+                    {{ $slot }}
+                </div>
             </main>
         </div>
     </body>

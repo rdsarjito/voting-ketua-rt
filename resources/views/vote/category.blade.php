@@ -14,30 +14,30 @@
         <div class="p-3 bg-yellow-600 text-white rounded mb-4">Anda sudah memilih kandidat di kategori ini.</div>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         @foreach($category->candidates as $candidate)
-        <div class="p-4 bg-white dark:bg-gray-800 rounded shadow">
+        <div class="p-5 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition">
             @if($candidate->photo)
-                <img src="{{ asset('storage/'.$candidate->photo) }}" class="h-32 object-cover mb-2" />
+                <img src="{{ asset('storage/'.$candidate->photo) }}" class="h-40 w-full object-cover mb-3 rounded" />
             @endif
             <div class="text-lg font-semibold">{{ $candidate->name }}</div>
             <div class="mt-2">
                 <div class="font-semibold">Visi</div>
-                <div class="text-sm">{{ $candidate->vision }}</div>
+                <div class="text-sm text-gray-700">{{ $candidate->vision }}</div>
             </div>
             <div class="mt-2">
                 <div class="font-semibold">Misi</div>
-                <div class="text-sm">{{ $candidate->mission }}</div>
+                <div class="text-sm text-gray-700">{{ $candidate->mission }}</div>
             </div>
 
             @if(!$existingVote && $category->isVotingOpen())
             <form method="POST" action="{{ route('vote.store', $candidate) }}" class="mt-4">
                 @csrf
                 <input type="hidden" name="category_id" value="{{ $category->id }}" />
-                <button class="px-3 py-2 bg-blue-600 text-white rounded" onclick="return confirm('Pilih {{ $candidate->name }}?')">Pilih</button>
+                <button class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" onclick="return confirm('Pilih {{ $candidate->name }}?')">Pilih</button>
             </form>
             @elseif(!$category->isVotingOpen())
-                <div class="mt-4 p-2 bg-yellow-100 text-yellow-800 rounded text-sm">
+                <div class="mt-4 p-2 bg-yellow-100 text-yellow-800 rounded text-sm border border-yellow-200">
                     Voting belum dibuka atau sudah ditutup
                 </div>
             @endif
