@@ -14,45 +14,71 @@
         <div class="p-3 bg-yellow-600 text-white rounded mb-4">Anda sudah memilih kandidat di kategori ini.</div>
     @endif
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         @foreach($category->candidates as $candidate)
-        <div class="relative p-6 bg-gradient-to-br from-white to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-xl border border-gray-200/80 dark:border-gray-700/60 transition transform hover:-translate-y-0.5">
-            <div class="absolute inset-x-0 top-0 h-2 rounded-t-2xl bg-gradient-to-r from-white/70 via-white/30 to-white/70 dark:from-white/10 dark:via-white/5 dark:to-white/10"></div>
-            <div class="flex items-start gap-4">
-            @if($candidate->photo)
-                <img src="{{ asset('storage/'.$candidate->photo) }}" class="h-24 w-24 object-cover rounded-2xl shadow-inner border border-white/60 dark:border-white/10" />
-            @endif
-                <div class="flex-1">
-                    <div class="text-xl font-semibold tracking-tight text-gray-900 dark:text-gray-100">{{ $candidate->name }}</div>
-                    <div class="mt-1 flex items-center gap-2">
-                        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200 shadow-inner dark:bg-amber-500/15 dark:text-amber-200 dark:border-amber-400/20">{{ $category->name }}</span>
-                        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-sky-50 text-sky-700 border border-sky-200 shadow-inner dark:bg-sky-500/15 dark:text-sky-200 dark:border-sky-400/20">Kandidat</span>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-xl transition-all duration-300">
+            <!-- Header with photo -->
+            <div class="relative">
+                @if($candidate->photo)
+                    <img src="{{ asset('storage/'.$candidate->photo) }}" class="w-full h-48 object-cover" />
+                @else
+                    <div class="w-full h-48 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-gray-700 dark:to-gray-600 flex items-center justify-center">
+                        <svg class="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
                     </div>
+                @endif
+                <div class="absolute top-4 right-4">
+                    <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+                        {{ $category->name }}
+                    </span>
                 </div>
-            </div>
-            <div class="mt-4">
-                <div class="font-semibold">Visi</div>
-                <div class="text-sm text-gray-700 dark:text-gray-300 leading-6">{{ $candidate->vision }}</div>
-            </div>
-            <div class="mt-2">
-                <div class="font-semibold">Misi</div>
-                <div class="text-sm text-gray-700 dark:text-gray-300 leading-6">{{ $candidate->mission }}</div>
             </div>
 
-            @if(!$existingVote && $category->isVotingOpen())
-            <form method="POST" action="{{ route('vote.store', $candidate) }}" class="mt-4">
-                @csrf
-                <input type="hidden" name="category_id" value="{{ $category->id }}" />
-                <button class="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow active:scale-[0.99] transition" onclick="return confirm('Pilih {{ $candidate->name }}?')">Pilih Kandidat</button>
-            </form>
-            @elseif(!$category->isVotingOpen())
-                <div class="mt-4 p-2 bg-yellow-100 text-yellow-800 rounded-xl text-sm border border-yellow-200 shadow-inner">
-                    Voting belum dibuka atau sudah ditutup
+            <!-- Content -->
+            <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">{{ $candidate->name }}</h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2 flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Visi
+                        </h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{{ $candidate->vision }}</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2 flex items-center">
+                            <svg class="w-4 h-4 mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                            Misi
+                        </h4>
+                        <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">{{ $candidate->mission }}</p>
+                    </div>
                 </div>
-            @endif
+
+                <!-- Action Button -->
+                <div class="mt-6">
+                    @if(!$existingVote && $category->isVotingOpen())
+                        <form method="POST" action="{{ route('vote.store', $candidate) }}">
+                            @csrf
+                            <input type="hidden" name="category_id" value="{{ $category->id }}" />
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg" onclick="return confirm('Pilih {{ $candidate->name }}?')">
+                                Pilih Kandidat Ini
+                            </button>
+                        </form>
+                    @elseif(!$category->isVotingOpen())
+                        <div class="w-full bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 py-3 px-4 rounded-lg text-center font-medium border border-yellow-200 dark:border-yellow-700">
+                            Voting belum dibuka atau sudah ditutup
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>
         @endforeach
     </div>
 </x-app-layout>
-
-
