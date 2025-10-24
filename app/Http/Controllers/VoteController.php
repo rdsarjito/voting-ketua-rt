@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Mail;
 use App\Models\AuditLog;
+use App\Events\VoteCast;
 
 class VoteController extends Controller
 {
@@ -92,6 +93,9 @@ class VoteController extends Controller
 
         // Send confirmation email
         Mail::to($request->user()->email)->send(new VoteConfirmationMail($request->user(), $candidate));
+
+        // Broadcast real-time notification
+        broadcast(new VoteCast($vote, $request->user()));
 
         return back()->with('status', 'Vote berhasil disimpan. Email konfirmasi telah dikirim.');
     }

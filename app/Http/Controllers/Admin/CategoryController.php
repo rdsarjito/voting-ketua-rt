@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
+use App\Events\VotingPeriodChanged;
 
 class CategoryController extends Controller
 {
@@ -41,7 +42,11 @@ class CategoryController extends Controller
         
         $data['is_active'] = $request->has('is_active');
         
-        Category::create($data);
+        $category = Category::create($data);
+        
+        // Broadcast voting period change
+        broadcast(new VotingPeriodChanged($category, 'created'));
+        
         return redirect()->route('admin.categories.index')->with('status', 'Kategori dibuat.');
     }
 
@@ -76,6 +81,10 @@ class CategoryController extends Controller
         $data['is_active'] = $request->has('is_active');
         
         $category->update($data);
+        
+        // Broadcast voting period change
+        broadcast(new VotingPeriodChanged($category, 'updated'));
+        
         return redirect()->route('admin.categories.index')->with('status', 'Kategori diperbarui.');
     }
 

@@ -19,32 +19,46 @@
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-            @isset($header)
+            @if (isset($header))
                 <header class="bg-white dark:bg-gray-800 shadow">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>
-            @endisset
+            @endif
 
             <!-- Page Content -->
-            <main class="p-4">
-                <div class="max-w-7xl mx-auto space-y-4">
-                    @if (session('status'))
-                        <div class="p-3 rounded bg-green-100 text-green-800 border border-green-200">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    @if ($errors->any())
-                        <div class="p-3 rounded bg-red-100 text-red-800 border border-red-200">
-                            {{ $errors->first() }}
-                        </div>
-                    @endif
-
-                    {{ $slot }}
-                </div>
+            <main>
+                {{ $slot }}
             </main>
         </div>
+
+        <!-- Real-time notification container -->
+        <div id="notification-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+        <!-- Real-time status indicator -->
+        <div id="connection-status" class="fixed bottom-4 left-4 z-50">
+            <div class="bg-gray-800 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2">
+                <div id="status-dot" class="w-2 h-2 bg-red-500 rounded-full"></div>
+                <span id="status-text">Connecting...</span>
+            </div>
+        </div>
+
+        <script>
+            // Connection status indicator
+            document.addEventListener('DOMContentLoaded', function() {
+                const statusDot = document.getElementById('status-dot');
+                const statusText = document.getElementById('status-text');
+                
+                // Check if Echo is available
+                if (window.Echo) {
+                    statusDot.className = 'w-2 h-2 bg-green-500 rounded-full';
+                    statusText.textContent = 'Connected';
+                } else {
+                    statusDot.className = 'w-2 h-2 bg-yellow-500 rounded-full';
+                    statusText.textContent = 'Loading...';
+                }
+            });
+        </script>
     </body>
 </html>
