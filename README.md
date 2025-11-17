@@ -47,8 +47,12 @@ Credensial admin default: `admin@example.com` / `admin123`
 
 ### Fitur Utama
 - Admin: CRUD kategori, CRUD kandidat (upload foto), lihat hasil voting (Chart.js)
-- User: Register/Login, lihat kategori, pilih kandidat (1x per kategori), lihat detail kandidat
+- User: Register/Login, lihat kategori, pilih kandidat (1x per kategori), lihat detail kandidat, **bandingkan kandidat per kategori**
 - Middleware role `role:admin` membatasi akses admin
+
+#### Candidate Comparison
+- Halaman `Bandingkan Kandidat` menampilkan highlight kandidat teratas, total suara, dan tabel perbandingan lengkap (visi, misi, total vote, persentase).
+- Tombol aksi baru pada halaman kategori memudahkan pemilih berpindah ke tampilan perbandingan sebelum menentukan pilihan.
 
 ### Struktur DB
 - users: id, name, email, password, role

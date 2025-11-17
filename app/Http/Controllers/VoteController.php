@@ -38,6 +38,31 @@ class VoteController extends Controller
         return view('vote.category', compact('category', 'existingVote'));
     }
 
+    public function compare(Category $category): View
+    {
+        if (!$category->is_active) {
+            abort(404, 'Kategori tidak aktif');
+        }
+
+        $category->load([
+            'candidates' => function ($query) {
+                $query->withCount('votes')->orderBy('name');
+            },
+        ]);
+
+        $totalVotes = Vote::where('category_id', $category->id)->count();
+        $existingVote = Vote::where('user_id', auth()->id())
+            ->where('category_id', $category->id)
+            ->first();
+
+        return view('vote.compare', [
+            'category' => $category,
+            'candidates' => $category->candidates,
+            'totalVotes' => $totalVotes,
+            'existingVote' => $existingVote,
+        ]);
+    }
+
     public function store(Request $request, Candidate $candidate): RedirectResponse
     {
         $request->validate([

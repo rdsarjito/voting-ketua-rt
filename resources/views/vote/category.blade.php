@@ -15,6 +15,19 @@
     @endif
 
     <div class="max-w-4xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+            <div class="text-sm text-gray-600 dark:text-gray-300">
+                <div class="font-semibold">Periode Voting</div>
+                <div>
+                    {{ $category->voting_start ? $category->voting_start->format('d M Y H:i') : 'Belum ditentukan' }}
+                    &mdash;
+                    {{ $category->voting_end ? $category->voting_end->format('d M Y H:i') : 'Belum ditentukan' }}
+                </div>
+            </div>
+            <a href="{{ route('vote.category.compare', $category) }}" class="inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow hover:shadow-md transition">
+                Bandingkan Kandidat
+            </a>
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             @foreach($category->candidates as $candidate)
             <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-blue-300 dark:hover:border-blue-600 transition-colors">

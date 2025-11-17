@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
     // User voting routes
     Route::get('/categories', [VoteController::class, 'categories'])->name('vote.categories');
     Route::get('/categories/{category}', [VoteController::class, 'showCategory'])->name('vote.category.show');
+    Route::get('/categories/{category}/compare', [VoteController::class, 'compare'])->name('vote.category.compare');
     Route::post('/vote/{candidate}', [VoteController::class, 'store'])->middleware('audit')->name('vote.store');
 });
 
