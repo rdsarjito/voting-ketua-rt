@@ -28,6 +28,11 @@ class Category extends Model
         return $this->hasMany(Candidate::class);
     }
 
+    public function votes(): HasMany
+    {
+        return $this->hasMany(Vote::class);
+    }
+
     public function isVotingOpen(): bool
     {
         if (!$this->is_active) {
