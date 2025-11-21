@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
@@ -25,6 +26,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/categories/{category}', [VoteController::class, 'showCategory'])->name('vote.category.show');
     Route::get('/categories/{category}/compare', [VoteController::class, 'compare'])->name('vote.category.compare');
     Route::post('/vote/{candidate}', [VoteController::class, 'store'])->middleware('audit')->name('vote.store');
+
+    // Notification center
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
+    Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-as-read');
 });
 
 // Admin routes

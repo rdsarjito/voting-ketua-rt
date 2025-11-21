@@ -29,6 +29,7 @@ window.Echo.channel('voting-updates')
                 `${e.user_name} memilih ${e.candidate_name} untuk ${e.category_name}`,
                 'success'
             );
+            incrementNotificationBadge();
         }
     })
     .listen('.voting.period.changed', (e) => {
@@ -41,6 +42,7 @@ window.Echo.channel('voting-updates')
                 `Periode voting ${e.category_name} telah ${e.action}`,
                 'info'
             );
+            incrementNotificationBadge();
         }
     });
 
@@ -56,6 +58,7 @@ window.Echo.private('admin-notifications')
                 `${e.user_name} memilih ${e.candidate_name} untuk ${e.category_name}`,
                 'warning'
             );
+            incrementNotificationBadge();
         }
     });
 
@@ -115,3 +118,36 @@ function showNotification(title, message, type = 'info') {
 
 // Make notification function globally available
 window.showNotification = showNotification;
+
+/**
+ * Update notification badge count safely.
+ */
+function updateNotificationBadge(delta = 1) {
+    const badge = document.getElementById('notification-badge');
+
+    if (!badge) {
+        return;
+    }
+
+    const currentValue = parseInt(badge.textContent, 10) || 0;
+    const nextValue = Math.max(0, currentValue + delta);
+
+    if (nextValue === 0) {
+        badge.classList.add('hidden');
+        badge.textContent = '0';
+    } else {
+        badge.classList.remove('hidden');
+        badge.textContent = String(nextValue);
+    }
+}
+
+function incrementNotificationBadge() {
+    updateNotificationBadge(1);
+}
+
+function decrementNotificationBadge() {
+    updateNotificationBadge(-1);
+}
+
+window.incrementNotificationBadge = incrementNotificationBadge;
+window.decrementNotificationBadge = decrementNotificationBadge;

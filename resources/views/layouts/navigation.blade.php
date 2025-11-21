@@ -19,6 +19,20 @@
                         {{ __('Kategori Voting') }}
                     </x-nav-link>
                     @auth
+                        @php($unreadCount = auth()->user()->unreadNotificationsCount())
+                        <x-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
+                            <span class="inline-flex items-center gap-2">
+                                {{ __('Notifikasi') }}
+                                <span
+                                    id="notification-badge"
+                                    class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-indigo-600 px-2 text-xs font-semibold text-white {{ $unreadCount > 0 ? '' : 'hidden' }}"
+                                >
+                                    {{ $unreadCount }}
+                                </span>
+                            </span>
+                        </x-nav-link>
+                    @endauth
+                    @auth
                         @if(auth()->user()->role === 'admin')
                             <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
                                 {{ __('Kategori') }}
@@ -99,6 +113,17 @@
                 {{ __('Kategori Voting') }}
             </x-responsive-nav-link>
             @auth
+                <x-responsive-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
+                    <span class="inline-flex items-center gap-2">
+                        {{ __('Notifikasi') }}
+                        @php($unreadCount = auth()->user()->unreadNotificationsCount())
+                        <span
+                            class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-indigo-600 px-2 text-xs font-semibold text-white {{ $unreadCount > 0 ? '' : 'hidden' }}"
+                        >
+                            {{ $unreadCount }}
+                        </span>
+                    </span>
+                </x-responsive-nav-link>
                 @if(auth()->user()->role === 'admin')
                     <x-responsive-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
                         {{ __('Kelola Kategori') }}
