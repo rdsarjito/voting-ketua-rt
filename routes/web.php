@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/categories/{category}', [VoteController::class, 'showCategory'])->name('vote.category.show');
     Route::get('/categories/{category}/compare', [VoteController::class, 'compare'])->name('vote.category.compare');
     Route::post('/vote/{candidate}', [VoteController::class, 'store'])->middleware('audit')->name('vote.store');
+    Route::get('/history', [VoteController::class, 'history'])->name('vote.history');
 
     // Notification center
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');

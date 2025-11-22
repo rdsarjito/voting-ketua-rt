@@ -19,6 +19,9 @@
                         {{ __('Kategori Voting') }}
                     </x-nav-link>
                     @auth
+                        <x-nav-link :href="route('vote.history')" :active="request()->routeIs('vote.history')">
+                            {{ __('Riwayat Voting') }}
+                        </x-nav-link>
                         @php($unreadCount = auth()->user()->unreadNotificationsCount())
                         <x-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
                             <span class="inline-flex items-center gap-2">
@@ -112,6 +115,11 @@
             <x-responsive-nav-link :href="route('vote.categories')" :active="request()->routeIs('vote.categories')">
                 {{ __('Kategori Voting') }}
             </x-responsive-nav-link>
+            @auth
+                <x-responsive-nav-link :href="route('vote.history')" :active="request()->routeIs('vote.history')">
+                    {{ __('Riwayat Voting') }}
+                </x-responsive-nav-link>
+            @endauth
             @auth
                 <x-responsive-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.*')">
                     <span class="inline-flex items-center gap-2">

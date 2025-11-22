@@ -165,4 +165,28 @@ class VoteController extends Controller
 
         return response()->stream($callback, 200, $headers);
     }
+
+    /**
+     * Display the authenticated user's voting history.
+     */
+    public function history(Request $request): View
+    {
+        $user = $request->user();
+        
+        $votes = Vote::where('user_id', $user->id)
+            ->with(['candidate', 'category'])
+            ->latest()
+            ->paginate(15);
+
+        $stats = [
+            'total_votes' => $user->votes()->count(),
+            'categories_voted' => $user->votes()->distinct('category_id')->count(),
+            'latest_vote' => $user->votes()->latest()->first()?->created_at,
+        ];
+
+        return view('vote.history', [
+            'votes' => $votes,
+            'stats' => $stats,
+        ]);
+    }
 }
