@@ -189,4 +189,39 @@ class VoteController extends Controller
             'stats' => $stats,
         ]);
     }
+
+    /**
+     * Export the authenticated user's voting history as CSV.
+     */
+    public function historyExport(Request $request): StreamedResponse
+    {
+        $user = $request->user();
+        $filename = 'vote_history_'.$user->id.'_'.now()->format('Ymd_His').'.csv';
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ];
+
+        $callback = function () use ($user) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, ['Category', 'Candidate', 'Voted At']);
+
+            $user->votes()
+                ->with(['candidate:id,name', 'category:id,name'])
+                ->orderBy('created_at', 'desc')
+                ->chunk(200, function ($chunk) use ($handle) {
+                    foreach ($chunk as $vote) {
+                        fputcsv($handle, [
+                            $vote->category->name ?? '-',
+                            $vote->candidate->name ?? '-',
+                            optional($vote->created_at)->format('d-m-Y H:i'),
+                        ]);
+                    }
+                });
+
+            fclose($handle);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

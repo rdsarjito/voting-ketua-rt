@@ -1,8 +1,29 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Riwayat Voting
-        </h2>
+        <div class="flex items-center justify-between gap-4">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                Riwayat Voting
+            </h2>
+            <div class="flex items-center gap-2 text-sm">
+                <a
+                    href="{{ route('vote.categories') }}"
+                    class="text-indigo-600 dark:text-indigo-400 hover:underline"
+                >
+                    Vote Baru
+                </a>
+                <span class="text-gray-300 dark:text-gray-600">|</span>
+                <a
+                    href="{{ route('vote.history.export') }}"
+                    class="text-gray-600 dark:text-gray-300 hover:underline flex items-center gap-1"
+                >
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M4 12l3.029-3.029a3 3 0 014.242 0L14.3 12l.471.471a3 3 0 004.242 0L20 11.485" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12" />
+                    </svg>
+                    Unduh CSV
+                </a>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-6">
