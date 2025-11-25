@@ -23,6 +23,58 @@
             </form>
         </div>
 
+        <div class="rounded-2xl border border-gray-200 bg-white/70 p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800/70">
+            <form method="GET" class="grid gap-4 sm:grid-cols-3">
+                <div>
+                    <label for="type" class="block text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                        Jenis Notifikasi
+                    </label>
+                    <select
+                        id="type"
+                        name="type"
+                        class="mt-1 w-full rounded-lg border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
+                    >
+                        <option value="all" @selected($filterType === 'all')>Semua</option>
+                        @foreach($availableTypes as $type)
+                            <option value="{{ $type }}" @selected($filterType === $type)>{{ \Illuminate\Support\Str::headline($type) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div>
+                    <label for="status" class="block text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                        Status
+                    </label>
+                    <select
+                        id="status"
+                        name="status"
+                        class="mt-1 w-full rounded-lg border-gray-300 text-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100"
+                    >
+                        <option value="all" @selected($filterStatus === 'all')>Semua</option>
+                        <option value="unread" @selected($filterStatus === 'unread')>Belum Dibaca</option>
+                    </select>
+                </div>
+
+                <div class="flex items-end gap-2">
+                    <button
+                        type="submit"
+                        class="inline-flex flex-1 items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                        Terapkan
+                    </button>
+
+                    @if($filterType !== 'all' || $filterStatus !== 'all')
+                        <a
+                            href="{{ route('notifications.index') }}"
+                            class="inline-flex items-center justify-center rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+                        >
+                            Reset
+                        </a>
+                    @endif
+                </div>
+            </form>
+        </div>
+
         <div class="grid gap-4">
             @forelse ($notifications as $notification)
                 @php
