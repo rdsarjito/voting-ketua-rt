@@ -6,11 +6,19 @@
     <div class="mb-4 flex items-center justify-between">
         <a href="{{ route('admin.categories.create') }}" class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Tambah</a>
         <form method="GET" class="flex gap-2">
-            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari kategori..." class="border rounded p-2 bg-gray-100 dark:bg-gray-700" />
+            <input type="text" name="q" value="{{ $search }}" placeholder="Cari kategori..." class="border rounded p-2 bg-gray-100 dark:bg-gray-700" />
+            @if($search)
+                <a href="{{ route('admin.categories.index') }}" class="px-3 py-2 border border-gray-300 text-gray-700 rounded hover:bg-gray-100 dark:text-gray-200 dark:border-gray-600">Reset</a>
+            @endif
             <button class="px-3 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">Cari</button>
         </form>
     </div>
     <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+        @if($search)
+            <p class="mb-3 text-sm text-gray-600 dark:text-gray-300">
+                Menampilkan hasil untuk: <span class="font-semibold">"{{ $search }}"</span>
+            </p>
+        @endif
         <table class="w-full text-left text-sm">
             <thead>
                 <tr>
@@ -21,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($categories as $category)
+                @forelse($categories as $category)
                 <tr class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/30">
                     <td class="py-2">{{ $category->name }}</td>
                     <td class="py-2">
@@ -51,7 +59,13 @@
                         </form>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="4" class="py-8 text-center text-gray-500 dark:text-gray-400">
+                        Tidak ada kategori yang cocok dengan pencarian.
+                    </td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
         <div class="mt-4">{{ $categories->links() }}</div>
