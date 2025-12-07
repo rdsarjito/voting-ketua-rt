@@ -9,33 +9,177 @@
 
 ## Voting Ketua RT - Laravel + Blade + PostgreSQL
 
+Sistem voting online untuk pemilihan ketua RT yang transparan dan demokratis.
+
 ### Persyaratan
-- PHP 8.2+
-- Composer
-- Node.js 18+
-- PostgreSQL 14+ (opsional: gunakan docker-compose)
+- PHP 8.2+ (✅ Terdeteksi: PHP 8.3.28)
+- Composer (✅ Terdeteksi: Composer 2.8.12)
+- Node.js 18+ (✅ Terdeteksi: Node.js v24.8.0)
+- Database: PostgreSQL 14+ (via Docker) atau SQLite (default)
 
-### Setup Cepat
-1. Clone repo dan masuk folder
-2. Salin `.env` dari `.env.example`, lalu set:
-   - `DB_CONNECTION=pgsql`
-   - `DB_HOST=127.0.0.1`
-   - `DB_PORT=5432`
-   - `DB_DATABASE=voting_ketua_rt`
-   - `DB_USERNAME=postgres`
-   - `DB_PASSWORD=postgres`
-3. Install dependency dan scaffold auth Breeze (sudah diinstall)
-   - `composer install`
-   - `npm install && npm run build`
-4. Jalankan PostgreSQL (opsi Docker):
-   - `docker compose up -d`
-5. Generate key, migrate, seed, dan storage link:
-   - `php artisan key:generate`
-   - `php artisan migrate --seed`
-   - `php artisan storage:link`
-6. Jalankan dev server: `php artisan serve`
+---
 
-Credensial admin default: `admin@example.com` / `admin123`
+## 🚀 Cara Menjalankan Project
+
+### Opsi 1: Setup Baru (First Time)
+
+Jika ini pertama kali menjalankan project:
+
+```bash
+# 1. Install dependencies PHP
+composer install
+
+# 2. Install dependencies Node.js
+npm install
+
+# 3. Build assets frontend
+npm run build
+
+# 4. Generate application key (jika belum ada)
+php artisan key:generate
+
+# 5. Setup database
+# Opsi A: Gunakan SQLite (paling mudah, tidak perlu setup database)
+# Pastikan file database/database.sqlite sudah ada
+
+# Opsi B: Gunakan PostgreSQL via Docker
+docker compose up -d
+
+# 6. Jalankan migration dan seed data
+php artisan migrate --seed
+
+# 7. Buat symbolic link untuk storage
+php artisan storage:link
+
+# 8. Jalankan development server
+php artisan serve
+```
+
+**Akses aplikasi:** http://localhost:8000
+
+**Credensial Admin:**
+- Email: `admin@example.com`
+- Password: `admin123`
+
+---
+
+### Opsi 2: Menjalankan Kembali (Sudah Setup)
+
+Jika project sudah pernah di-setup sebelumnya:
+
+```bash
+# 1. Pastikan database berjalan (jika pakai PostgreSQL)
+docker compose up -d
+
+# 2. Jalankan server Laravel
+php artisan serve
+```
+
+**Akses aplikasi:** http://localhost:8000
+
+---
+
+### Opsi 3: Development Mode (dengan Hot Reload)
+
+Untuk development dengan auto-reload CSS/JS:
+
+```bash
+# Terminal 1: Jalankan Laravel server
+php artisan serve
+
+# Terminal 2: Jalankan Vite dev server (hot reload)
+npm run dev
+```
+
+Atau gunakan script composer yang sudah tersedia:
+
+```bash
+composer dev
+```
+
+Ini akan menjalankan:
+- Laravel server (port 8000)
+- Queue worker
+- Laravel Pail (logs)
+- Vite dev server (hot reload)
+
+---
+
+### Konfigurasi Database
+
+#### Menggunakan SQLite (Default - Paling Mudah)
+
+File `.env` sudah dikonfigurasi untuk SQLite:
+```env
+DB_CONNECTION=sqlite
+DB_DATABASE=/absolute/path/to/database/database.sqlite
+```
+
+Atau cukup pastikan file `database/database.sqlite` ada.
+
+#### Menggunakan PostgreSQL
+
+1. Edit file `.env`:
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=voting_ketua_rt
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+```
+
+2. Jalankan PostgreSQL via Docker:
+```bash
+docker compose up -d
+```
+
+3. Jalankan migration:
+```bash
+php artisan migrate --seed
+```
+
+---
+
+### Troubleshooting
+
+**Error: "No application encryption key has been specified"**
+```bash
+php artisan key:generate
+```
+
+**Error: "SQLSTATE[HY000] [2002] Connection refused" (PostgreSQL)**
+```bash
+# Pastikan PostgreSQL berjalan
+docker compose up -d
+
+# Atau cek status
+docker compose ps
+```
+
+**Error: "Class 'Vite' not found" atau CSS/JS tidak muncul**
+```bash
+npm install
+npm run build
+# atau untuk development
+npm run dev
+```
+
+**Error: "The stream or file could not be opened" (storage)**
+```bash
+php artisan storage:link
+chmod -R 775 storage bootstrap/cache
+```
+
+**Port 8000 sudah digunakan**
+```bash
+# Gunakan port lain
+php artisan serve --port=8001
+```
+
+---
+
+### Fitur Utama
 
 ### Workflow Git
 - Repo sudah di-inisialisasi dengan cabang `main` dan remote `origin` ke GitHub.

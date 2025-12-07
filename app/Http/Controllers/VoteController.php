@@ -172,11 +172,23 @@ class VoteController extends Controller
     public function history(Request $request): View
     {
         $user = $request->user();
+        $search = $request->query('search');
         
-        $votes = Vote::where('user_id', $user->id)
-            ->with(['candidate', 'category'])
-            ->latest()
-            ->paginate(15);
+        $votesQuery = Vote::where('user_id', $user->id)
+            ->with(['candidate', 'category']);
+
+        // Apply search filter
+        if ($search) {
+            $votesQuery->where(function ($query) use ($search) {
+                $query->whereHas('candidate', function ($q) use ($search) {
+                    $q->where('name', 'like', '%'.$search.'%');
+                })->orWhereHas('category', function ($q) use ($search) {
+                    $q->where('name', 'like', '%'.$search.'%');
+                });
+            });
+        }
+
+        $votes = $votesQuery->latest()->paginate(15)->withQueryString();
 
         $stats = [
             'total_votes' => $user->votes()->count(),
@@ -187,6 +199,7 @@ class VoteController extends Controller
         return view('vote.history', [
             'votes' => $votes,
             'stats' => $stats,
+            'search' => $search,
         ]);
     }
 

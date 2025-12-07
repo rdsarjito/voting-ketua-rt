@@ -35,6 +35,33 @@
                 <span>Kategori: <strong class="text-gray-900 dark:text-white">{{ $stats['categories_voted'] }}</strong></span>
             </div>
 
+            <!-- Search Form -->
+            <div class="mb-6">
+                <form method="GET" action="{{ route('vote.history') }}" class="flex gap-2">
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ $search }}"
+                        placeholder="Cari berdasarkan nama kandidat atau kategori..."
+                        class="flex-1 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:ring-indigo-500"
+                    />
+                    <button
+                        type="submit"
+                        class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+                    >
+                        Cari
+                    </button>
+                    @if($search)
+                        <a
+                            href="{{ route('vote.history') }}"
+                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >
+                            Reset
+                        </a>
+                    @endif
+                </form>
+            </div>
+
             <!-- Voting List -->
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
