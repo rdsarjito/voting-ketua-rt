@@ -173,6 +173,8 @@ class VoteController extends Controller
     {
         $user = $request->user();
         $search = $request->query('search');
+        $sort = $request->query('sort', 'newest');
+        $orderDirection = $sort === 'oldest' ? 'asc' : 'desc';
         
         $votesQuery = Vote::where('user_id', $user->id)
             ->with(['candidate', 'category']);
@@ -188,7 +190,10 @@ class VoteController extends Controller
             });
         }
 
-        $votes = $votesQuery->latest()->paginate(15)->withQueryString();
+        $votes = $votesQuery
+            ->orderBy('created_at', $orderDirection)
+            ->paginate(15)
+            ->withQueryString();
 
         $stats = [
             'total_votes' => $user->votes()->count(),
@@ -200,6 +205,7 @@ class VoteController extends Controller
             'votes' => $votes,
             'stats' => $stats,
             'search' => $search,
+            'sort' => $sort,
         ]);
     }
 

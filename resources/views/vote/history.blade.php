@@ -45,6 +45,13 @@
                         placeholder="Cari berdasarkan nama kandidat atau kategori..."
                         class="flex-1 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:ring-indigo-500"
                     />
+                    <select
+                        name="sort"
+                        class="rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:ring-indigo-500"
+                    >
+                        <option value="newest" @selected($sort === 'newest')>Terbaru dulu</option>
+                        <option value="oldest" @selected($sort === 'oldest')>Terlama dulu</option>
+                    </select>
                     <button
                         type="submit"
                         class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
