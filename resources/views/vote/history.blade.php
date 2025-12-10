@@ -1,29 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between gap-4">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Riwayat Voting
-            </h2>
-            <div class="flex items-center gap-2 text-sm">
-                <a
-                    href="{{ route('vote.categories') }}"
-                    class="text-indigo-600 dark:text-indigo-400 hover:underline"
-                >
-                    Vote Baru
-                </a>
-                <span class="text-gray-300 dark:text-gray-600">|</span>
-                <a
-                    href="{{ route('vote.history.export') }}"
-                    class="text-gray-600 dark:text-gray-300 hover:underline flex items-center gap-1"
-                >
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M4 12l3.029-3.029a3 3 0 014.242 0L14.3 12l.471.471a3 3 0 004.242 0L20 11.485" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v12" />
-                    </svg>
-                    Unduh CSV
-                </a>
-            </div>
-        </div>
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            Riwayat Voting
+        </h2>
     </x-slot>
 
     <div class="py-6">
@@ -35,39 +14,35 @@
                 <span>Kategori: <strong class="text-gray-900 dark:text-white">{{ $stats['categories_voted'] }}</strong></span>
             </div>
 
-            <!-- Search Form -->
-            <div class="mb-6">
-                <form method="GET" action="{{ route('vote.history') }}" class="flex gap-2">
-                    <input
-                        type="text"
-                        name="search"
-                        value="{{ $search }}"
-                        placeholder="Cari berdasarkan nama kandidat atau kategori..."
-                        class="flex-1 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:ring-indigo-500"
-                    />
-                    <select
-                        name="sort"
-                        class="rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:ring-indigo-500"
-                    >
-                        <option value="newest" @selected($sort === 'newest')>Terbaru dulu</option>
-                        <option value="oldest" @selected($sort === 'oldest')>Terlama dulu</option>
-                    </select>
-                    <button
-                        type="submit"
-                        class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
-                    >
-                        Cari
-                    </button>
-                    @if($search)
-                        <a
-                            href="{{ route('vote.history') }}"
-                            class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+            <!-- Filter -->
+            @if($filterCategories->isNotEmpty())
+                <div class="mb-4">
+                    <form method="GET" action="{{ route('vote.history') }}" class="flex items-center gap-3 text-sm">
+                        <label for="category" class="text-gray-700 dark:text-gray-300">Filter kategori:</label>
+                        <select
+                            id="category"
+                            name="category"
+                            class="rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:ring-indigo-500"
+                            onchange="this.form.submit()"
                         >
-                            Reset
-                        </a>
-                    @endif
-                </form>
-            </div>
+                            <option value="">Semua</option>
+                            @foreach($filterCategories as $category)
+                                <option value="{{ $category->id }}" @selected($selectedCategory == $category->id)>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @if($selectedCategory)
+                            <a
+                                href="{{ route('vote.history') }}"
+                                class="text-indigo-600 dark:text-indigo-400 hover:underline"
+                            >
+                                Reset
+                            </a>
+                        @endif
+                    </form>
+                </div>
+            @endif
 
             <!-- Voting List -->
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">

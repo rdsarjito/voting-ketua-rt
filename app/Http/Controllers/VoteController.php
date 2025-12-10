@@ -172,28 +172,20 @@ class VoteController extends Controller
     public function history(Request $request): View
     {
         $user = $request->user();
-        $search = $request->query('search');
-        $sort = $request->query('sort', 'newest');
-        $orderDirection = $sort === 'oldest' ? 'asc' : 'desc';
+        $categoryId = $request->query('category');
+        $filterCategories = Category::whereIn(
+            'id',
+            $user->votes()->distinct('category_id')->pluck('category_id')
+        )->orderBy('name')->get(['id', 'name']);
         
         $votesQuery = Vote::where('user_id', $user->id)
-            ->with(['candidate', 'category']);
+            ->with(['candidate', 'category'])
+            ->when($categoryId, function ($query) use ($categoryId) {
+                $query->where('category_id', $categoryId);
+            })
+            ->latest();
 
-        // Apply search filter
-        if ($search) {
-            $votesQuery->where(function ($query) use ($search) {
-                $query->whereHas('candidate', function ($q) use ($search) {
-                    $q->where('name', 'like', '%'.$search.'%');
-                })->orWhereHas('category', function ($q) use ($search) {
-                    $q->where('name', 'like', '%'.$search.'%');
-                });
-            });
-        }
-
-        $votes = $votesQuery
-            ->orderBy('created_at', $orderDirection)
-            ->paginate(15)
-            ->withQueryString();
+        $votes = $votesQuery->paginate(15)->withQueryString();
 
         $stats = [
             'total_votes' => $user->votes()->count(),
@@ -204,43 +196,8 @@ class VoteController extends Controller
         return view('vote.history', [
             'votes' => $votes,
             'stats' => $stats,
-            'search' => $search,
-            'sort' => $sort,
+            'filterCategories' => $filterCategories,
+            'selectedCategory' => $categoryId,
         ]);
-    }
-
-    /**
-     * Export the authenticated user's voting history as CSV.
-     */
-    public function historyExport(Request $request): StreamedResponse
-    {
-        $user = $request->user();
-        $filename = 'vote_history_'.$user->id.'_'.now()->format('Ymd_His').'.csv';
-        $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
-        ];
-
-        $callback = function () use ($user) {
-            $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['Category', 'Candidate', 'Voted At']);
-
-            $user->votes()
-                ->with(['candidate:id,name', 'category:id,name'])
-                ->orderBy('created_at', 'desc')
-                ->chunk(200, function ($chunk) use ($handle) {
-                    foreach ($chunk as $vote) {
-                        fputcsv($handle, [
-                            $vote->category->name ?? '-',
-                            $vote->candidate->name ?? '-',
-                            optional($vote->created_at)->format('d-m-Y H:i'),
-                        ]);
-                    }
-                });
-
-            fclose($handle);
-        };
-
-        return response()->stream($callback, 200, $headers);
     }
 }
