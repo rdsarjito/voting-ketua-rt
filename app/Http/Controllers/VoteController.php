@@ -173,6 +173,12 @@ class VoteController extends Controller
     {
         $user = $request->user();
         $categoryId = $request->query('category');
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
+
+        $start = $startDate ? \Carbon\Carbon::parse($startDate)->startOfDay() : null;
+        $end = $endDate ? \Carbon\Carbon::parse($endDate)->endOfDay() : null;
+
         $filterCategories = Category::whereIn(
             'id',
             $user->votes()->distinct('category_id')->pluck('category_id')
@@ -182,6 +188,12 @@ class VoteController extends Controller
             ->with(['candidate', 'category'])
             ->when($categoryId, function ($query) use ($categoryId) {
                 $query->where('category_id', $categoryId);
+            })
+            ->when($start, function ($query) use ($start) {
+                $query->where('created_at', '>=', $start);
+            })
+            ->when($end, function ($query) use ($end) {
+                $query->where('created_at', '<=', $end);
             })
             ->latest();
 
@@ -198,6 +210,8 @@ class VoteController extends Controller
             'stats' => $stats,
             'filterCategories' => $filterCategories,
             'selectedCategory' => $categoryId,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
         ]);
     }
 }

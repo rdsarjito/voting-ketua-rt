@@ -17,29 +17,61 @@
             <!-- Filter -->
             @if($filterCategories->isNotEmpty())
                 <div class="mb-4">
-                    <form method="GET" action="{{ route('vote.history') }}" class="flex items-center gap-3 text-sm">
-                        <label for="category" class="text-gray-700 dark:text-gray-300">Filter kategori:</label>
-                        <select
-                            id="category"
-                            name="category"
-                            class="rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:ring-indigo-500"
-                            onchange="this.form.submit()"
-                        >
-                            <option value="">Semua</option>
-                            @foreach($filterCategories as $category)
-                                <option value="{{ $category->id }}" @selected($selectedCategory == $category->id)>
-                                    {{ $category->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @if($selectedCategory)
-                            <a
-                                href="{{ route('vote.history') }}"
-                                class="text-indigo-600 dark:text-indigo-400 hover:underline"
+                    <form method="GET" action="{{ route('vote.history') }}" class="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm">
+                        <div class="flex items-center gap-2">
+                            <label for="category" class="text-gray-700 dark:text-gray-300 whitespace-nowrap">Kategori:</label>
+                            <select
+                                id="category"
+                                name="category"
+                                class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:ring-indigo-500"
                             >
-                                Reset
-                            </a>
-                        @endif
+                                <option value="">Semua</option>
+                                @foreach($filterCategories as $category)
+                                    <option value="{{ $category->id }}" @selected($selectedCategory == $category->id)>
+                                        {{ $category->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <label for="start_date" class="text-gray-700 dark:text-gray-300 whitespace-nowrap">Dari:</label>
+                            <input
+                                id="start_date"
+                                type="date"
+                                name="start_date"
+                                value="{{ $startDate }}"
+                                class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:ring-indigo-500"
+                            />
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <label for="end_date" class="text-gray-700 dark:text-gray-300 whitespace-nowrap">Sampai:</label>
+                            <input
+                                id="end_date"
+                                type="date"
+                                name="end_date"
+                                value="{{ $endDate }}"
+                                class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-indigo-500 focus:ring-indigo-500"
+                            />
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button
+                                type="submit"
+                                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition w-full md:w-auto"
+                            >
+                                Terapkan
+                            </button>
+                            @if($selectedCategory || $startDate || $endDate)
+                                <a
+                                    href="{{ route('vote.history') }}"
+                                    class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition w-full md:w-auto text-center"
+                                >
+                                    Reset
+                                </a>
+                            @endif
+                        </div>
                     </form>
                 </div>
             @endif
