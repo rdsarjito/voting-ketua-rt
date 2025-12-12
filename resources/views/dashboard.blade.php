@@ -179,18 +179,61 @@
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                        <p class="text-sm text-gray-500 mb-4">Suara Terakhir</p>
-                        <div class="space-y-4 max-h-80 overflow-y-auto">
-                            @forelse($userRecentVotes as $vote)
-                                <div class="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
-                                    <p class="font-semibold text-gray-900">{{ $vote->candidate->name }}</p>
-                                    <p class="text-xs text-gray-500">{{ $vote->candidate->category->name ?? '-' }}</p>
-                                    <p class="text-xs text-gray-400 mt-1">{{ $vote->created_at->diffForHumans() }}</p>
-                                </div>
-                            @empty
-                                <p class="text-sm text-gray-400">Anda belum memilih kandidat.</p>
-                            @endforelse
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <p class="text-sm text-gray-500">Kategori Aktif</p>
+                                <a href="{{ route('vote.categories') }}" class="text-xs text-blue-600 hover:underline">Lihat Semua</a>
+                            </div>
+                            <div class="space-y-3 max-h-80 overflow-y-auto">
+                                @forelse($activeCategories ?? [] as $category)
+                                    <div class="border border-gray-200 rounded-lg p-3 hover:border-blue-300 transition-colors">
+                                        <div class="flex items-start justify-between gap-2 mb-2">
+                                            <div class="flex-1">
+                                                <p class="font-semibold text-sm text-gray-900">{{ $category['name'] }}</p>
+                                                <p class="text-xs text-gray-500 mt-0.5">
+                                                    {{ $category['candidates_count'] }} kandidat
+                                                    @if($category['voting_end'])
+                                                        • Tutup: {{ \Carbon\Carbon::parse($category['voting_end'])->format('d M H:i') }}
+                                                    @endif
+                                                </p>
+                                            </div>
+                                            @if($category['has_voted'])
+                                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                                    Sudah Vote
+                                                </span>
+                                            @else
+                                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
+                                                    Belum Vote
+                                                </span>
+                                            @endif
+                                        </div>
+                                        <a 
+                                            href="{{ route('vote.category.show', $category['id']) }}"
+                                            class="inline-flex items-center justify-center w-full mt-2 px-3 py-1.5 text-xs font-medium rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors"
+                                        >
+                                            {{ $category['has_voted'] ? 'Lihat Detail' : 'Vote Sekarang' }}
+                                        </a>
+                                    </div>
+                                @empty
+                                    <p class="text-sm text-gray-400 text-center py-4">Tidak ada kategori aktif saat ini.</p>
+                                @endforelse
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                            <p class="text-sm text-gray-500 mb-4">Suara Terakhir</p>
+                            <div class="space-y-4 max-h-80 overflow-y-auto">
+                                @forelse($userRecentVotes as $vote)
+                                    <div class="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+                                        <p class="font-semibold text-gray-900">{{ $vote->candidate->name }}</p>
+                                        <p class="text-xs text-gray-500">{{ $vote->candidate->category->name ?? '-' }}</p>
+                                        <p class="text-xs text-gray-400 mt-1">{{ $vote->created_at->diffForHumans() }}</p>
+                                    </div>
+                                @empty
+                                    <p class="text-sm text-gray-400">Anda belum memilih kandidat.</p>
+                                @endforelse
+                            </div>
                         </div>
                     </div>
                 </div>

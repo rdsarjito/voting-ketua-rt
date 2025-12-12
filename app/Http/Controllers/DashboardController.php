@@ -134,6 +134,29 @@ class DashboardController extends Controller
             ->orderBy('voting_end')
             ->first();
 
+        // Get active categories with voting status
+        $activeCategories = Category::where('is_active', true)
+            ->withCount('candidates')
+            ->get()
+            ->filter(function ($category) {
+                return $category->isVotingOpen();
+            })
+            ->map(function ($category) use ($user) {
+                $hasVoted = $user->votes()
+                    ->where('category_id', $category->id)
+                    ->exists();
+                
+                return [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'candidates_count' => $category->candidates_count,
+                    'has_voted' => $hasVoted,
+                    'voting_end' => $category->voting_end,
+                ];
+            })
+            ->sortBy('name')
+            ->take(5);
+
         return [
             'userOverview' => [
                 'totalCategories' => $totalCategories,
@@ -142,6 +165,7 @@ class DashboardController extends Controller
                 'nextDeadline' => $nextDeadline,
             ],
             'userRecentVotes' => $userVotes->take(5),
+            'activeCategories' => $activeCategories,
         ];
     }
 }
