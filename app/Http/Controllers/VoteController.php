@@ -25,17 +25,33 @@ class VoteController extends Controller
         return view('vote.categories', compact('categories'));
     }
 
-    public function showCategory(Category $category): View
+    public function showCategory(Request $request, Category $category): View
     {
         if (!$category->is_active) {
             abort(404, 'Kategori tidak aktif');
         }
         
-        $category->load('candidates');
+        $searchQuery = $request->query('search');
+        
+        $category->load(['candidates' => function ($query) use ($searchQuery) {
+            if ($searchQuery) {
+                $query->where(function ($q) use ($searchQuery) {
+                    $q->where('name', 'like', '%' . $searchQuery . '%')
+                      ->orWhere('vision', 'like', '%' . $searchQuery . '%')
+                      ->orWhere('mission', 'like', '%' . $searchQuery . '%');
+                });
+            }
+        }]);
+        
         $existingVote = Vote::where('user_id', auth()->id())
             ->where('category_id', $category->id)
             ->first();
-        return view('vote.category', compact('category', 'existingVote'));
+            
+        return view('vote.category', [
+            'category' => $category,
+            'existingVote' => $existingVote,
+            'searchQuery' => $searchQuery,
+        ]);
     }
 
     public function compare(Category $category): View
