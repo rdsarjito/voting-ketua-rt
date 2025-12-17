@@ -1,12 +1,26 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Kategori Voting
-            </h2>
-            <span class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                {{ $categories->count() }} Kategori
-            </span>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
+            <div>
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                    Kategori Voting
+                </h2>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                    Pilih salah satu kategori di bawah untuk melihat dan memberikan suara kepada kandidat.
+                </p>
+            </div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    Voting dibuka
+                </span>
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800">
+                    <span class="w-2 h-2 rounded-full bg-gray-400 dark:bg-gray-500"></span>
+                    Voting ditutup
+                </span>
+                <span class="hidden sm:inline text-gray-400">•</span>
+                <span>{{ $categories->count() }} Kategori</span>
+            </div>
         </div>
     </x-slot>
 
