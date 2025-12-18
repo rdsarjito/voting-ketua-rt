@@ -26,27 +26,23 @@
 
     <div class="max-w-6xl mx-auto py-4">
         @if($categories->isEmpty())
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-dashed border-gray-300 dark:border-gray-600 p-10 text-center">
-                <div class="mx-auto w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center mb-4">
-                    <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6M3 21h18M3 10h18M5 6h14M5 3h14" />
-                    </svg>
-                </div>
-                <p class="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8 text-center">
+                <h3 class="text-base font-semibold text-gray-900 dark:text-white mb-1">
                     Belum ada kategori voting
-                </p>
-                <p class="text-sm text-gray-500 dark:text-gray-400">
+                </h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">
                     Kategori akan muncul di sini setelah dibuat oleh admin.
+                </p>
+                <p class="text-[11px] text-gray-400 dark:text-gray-500">
+                    Hubungi admin jika Anda merasa seharusnya sudah ada kategori yang aktif.
                 </p>
             </div>
         @else
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
                 @foreach($categories as $category)
                     <a href="{{ route('vote.category.show', $category) }}"
-                       class="group relative block bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-lg hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-200 overflow-hidden">
-                        <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-
-                        <div class="p-5 space-y-3">
+                       class="group block bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-indigo-400 dark:hover:border-indigo-500 shadow-sm hover:shadow-md transition-all duration-150">
+                        <div class="p-4 space-y-3">
                             <div class="flex items-start justify-between gap-2">
                                 <div>
                                     <div class="text-sm font-semibold text-gray-900 dark:text-white mb-1">
@@ -56,7 +52,7 @@
                                         {{ $category->candidates_count }} kandidat
                                     </div>
                                 </div>
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium
                                     @if($category->isVotingOpen())
                                         bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300
                                     @else
@@ -87,7 +83,7 @@
                             </div>
 
                             <div class="pt-1">
-                                <span class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-200 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                <span class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-medium bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-200 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                                     Lihat kandidat
                                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
