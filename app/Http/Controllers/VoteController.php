@@ -16,13 +16,23 @@ use App\Events\VoteCast;
 
 class VoteController extends Controller
 {
-    public function categories(): View
+    public function categories(Request $request): View
     {
-        $categories = Category::withCount('candidates')
-            ->where('is_active', true)
-            ->orderBy('name')
-            ->get();
-        return view('vote.categories', compact('categories'));
+        $searchQuery = $request->query('search');
+        
+        $categoriesQuery = Category::withCount('candidates')
+            ->where('is_active', true);
+        
+        if ($searchQuery) {
+            $categoriesQuery->where('name', 'like', '%' . $searchQuery . '%');
+        }
+        
+        $categories = $categoriesQuery->orderBy('name')->get();
+        
+        return view('vote.categories', [
+            'categories' => $categories,
+            'searchQuery' => $searchQuery,
+        ]);
     }
 
     public function showCategory(Request $request, Category $category): View

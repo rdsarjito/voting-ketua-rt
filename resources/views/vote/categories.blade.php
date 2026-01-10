@@ -25,6 +25,42 @@
     </x-slot>
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-6">
+        <div class="mb-6">
+            <form method="GET" action="{{ route('vote.categories') }}" class="flex gap-3">
+                <div class="flex-1 relative">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        value="{{ $searchQuery ?? '' }}"
+                        placeholder="Cari kategori..." 
+                        class="w-full px-4 py-3 pl-11 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                    />
+                    <svg class="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <button 
+                    type="submit"
+                    class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-colors shadow-sm hover:shadow"
+                >
+                    Cari
+                </button>
+                @if($searchQuery ?? false)
+                    <a 
+                        href="{{ route('vote.categories') }}"
+                        class="px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors font-medium"
+                    >
+                        Reset
+                    </a>
+                @endif
+            </form>
+            @if($searchQuery ?? false)
+                <p class="mt-3 text-sm text-gray-600 dark:text-gray-400">
+                    Menampilkan {{ $categories->count() }} hasil untuk "<strong>{{ $searchQuery }}</strong>"
+                </p>
+            @endif
+        </div>
+
         @if($categories->isEmpty())
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-12 text-center">
                 <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 mb-4">
