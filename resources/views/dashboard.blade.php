@@ -2,13 +2,13 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-xs uppercase tracking-wide text-gray-500">{{ now()->format('l, d F Y') }}</p>
-                <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
-                    {{ auth()->user()->role === 'admin' ? 'Control Center' : 'Progress Pemilihan' }}
+                <p class="text-xs uppercase tracking-wide text-indigo-600 font-semibold">{{ now()->format('l, d F Y') }}</p>
+                <h2 class="font-bold text-3xl bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent leading-tight">
+                    {{ auth()->user()->role === 'admin' ? '🎯 Control Center' : '📊 Progress Pemilihan' }}
                 </h2>
             </div>
-            <a href="{{ route('vote.categories') }}" class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white shadow hover:bg-blue-700 transition">
-                <span class="text-sm font-semibold">Lihat Kategori</span>
+            <a href="{{ route('vote.categories') }}" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200">
+                <span class="text-sm font-semibold">🗳️ Lihat Kategori</span>
             </a>
         </div>
     </x-slot>
@@ -18,29 +18,29 @@
             @if($mode === 'admin')
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
                     @foreach($metrics as $metric)
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
-                            <p class="text-sm text-gray-500">{{ $metric['label'] }}</p>
-                            <p class="text-3xl font-semibold text-gray-900 mt-2">{{ number_format($metric['value']) }}</p>
-                            <p class="text-xs text-gray-400 mt-1">{{ $metric['detail'] }}</p>
+                        <div class="bg-gradient-to-br from-white to-indigo-50 rounded-2xl shadow-lg border border-indigo-100 p-6 hover:shadow-xl transition-shadow duration-200">
+                            <p class="text-sm text-indigo-600 font-semibold">{{ $metric['label'] }}</p>
+                            <p class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mt-2">{{ number_format($metric['value']) }}</p>
+                            <p class="text-xs text-gray-500 mt-1">{{ $metric['detail'] }}</p>
                         </div>
                     @endforeach
                 </div>
 
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
                     <div class="xl:col-span-2 space-y-6">
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                        <div class="bg-gradient-to-br from-white to-purple-50 rounded-2xl shadow-lg border border-purple-100 p-6">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <p class="text-sm text-gray-500">Tingkat Partisipasi</p>
-                                    <h3 class="text-3xl font-semibold text-gray-900">{{ $turnoutRate ?? 0 }}%</h3>
-                                    <p class="text-xs text-gray-400 mt-1">Persentase pemilih aktif yang sudah memberikan suara</p>
+                                    <p class="text-sm text-purple-600 font-semibold">Tingkat Partisipasi</p>
+                                    <h3 class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">{{ $turnoutRate ?? 0 }}%</h3>
+                                    <p class="text-xs text-gray-500 mt-1">Persentase pemilih aktif yang sudah memberikan suara</p>
                                 </div>
                                 <div class="relative h-28 w-28">
                                     <svg viewBox="0 0 36 36" class="h-full w-full">
                                         <path class="text-gray-200 stroke-current" stroke-width="4" fill="none" d="M18 2.0845
                                             a 15.9155 15.9155 0 0 1 0 31.831
                                             a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                                        <path class="text-blue-600 stroke-current" stroke-width="4" stroke-linecap="round" fill="none"
+                                        <path class="text-purple-600 stroke-current" stroke-width="4" stroke-linecap="round" fill="none"
                                             stroke-dasharray="{{ $turnoutRate ?? 0 }}, 100"
                                             d="M18 2.0845
                                                 a 15.9155 15.9155 0 0 1 0 31.831
@@ -53,22 +53,22 @@
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                        <div class="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-lg border border-blue-100 p-6">
                             <div class="flex items-center justify-between mb-4">
                                 <div>
-                                    <p class="text-sm text-gray-500">Distribusi Suara per Kategori</p>
-                                    <h3 class="text-xl font-semibold text-gray-900">Snapshot Real-time</h3>
+                                    <p class="text-sm text-blue-600 font-semibold">📊 Distribusi Suara per Kategori</p>
+                                    <h3 class="text-xl font-bold text-gray-900">Snapshot Real-time</h3>
                                 </div>
-                                <span class="text-xs px-3 py-1 rounded-full bg-blue-50 text-blue-600 font-semibold">Live</span>
+                                <span class="text-xs px-3 py-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold shadow">🔴 Live</span>
                             </div>
                             <canvas id="categoryChart" height="160"></canvas>
                         </div>
 
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                        <div class="bg-gradient-to-br from-white to-indigo-50 rounded-2xl shadow-lg border border-indigo-100 p-6">
                             <div class="flex items-center justify-between mb-4">
                                 <div>
-                                    <p class="text-sm text-gray-500">Suara Masuk 10 Hari Terakhir</p>
-                                    <h3 class="text-xl font-semibold text-gray-900">Traffic Aktivitas</h3>
+                                    <p class="text-sm text-indigo-600 font-semibold">📈 Suara Masuk 10 Hari Terakhir</p>
+                                    <h3 class="text-xl font-bold text-gray-900">Traffic Aktivitas</h3>
                                 </div>
                             </div>
                             <canvas id="turnoutChart" height="160"></canvas>
@@ -76,12 +76,12 @@
                     </div>
 
                     <div class="space-y-6">
-                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                            <p class="text-sm text-gray-500 mb-4">Jadwal Voting</p>
+                        <div class="bg-gradient-to-br from-white to-amber-50 rounded-2xl shadow-lg border border-amber-100 p-6">
+                            <p class="text-sm text-amber-600 font-semibold mb-4">📅 Jadwal Voting</p>
                             <ul class="space-y-4">
                                 @forelse($upcomingWindows as $window)
                                     <li class="flex items-start gap-3">
-                                        <span class="w-2 h-2 rounded-full mt-2 {{ $window->isVotingOpen() ? 'bg-emerald-500' : 'bg-gray-300' }}"></span>
+                                        <span class="w-2 h-2 rounded-full mt-2 {{ $window->isVotingOpen() ? 'bg-green-500 animate-pulse' : 'bg-gray-300' }}"></span>
                                         <div>
                                             <p class="font-semibold text-gray-900">{{ $window->name }}</p>
                                             <p class="text-xs text-gray-500">
@@ -95,7 +95,7 @@
                                     <p class="text-sm text-gray-400">Belum ada jadwal aktif.</p>
                                 @endforelse
                             </ul>
-                            <a href="{{ route('admin.categories.index') }}" class="mt-4 inline-flex text-sm text-blue-600 hover:underline">Kelola Jadwal</a>
+                            <a href="{{ route('admin.categories.index') }}" class="mt-4 inline-flex text-sm font-semibold text-indigo-600 hover:text-purple-600 transition">✨ Kelola Jadwal</a>
                         </div>
 
                         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">

@@ -15,38 +15,16 @@ class NotificationController extends Controller
     public function index(Request $request): View
     {
         $user = $request->user();
-        $filterType = $request->query('type', 'all');
-        $filterStatus = $request->query('status', 'all');
 
-        $notificationsQuery = $user->notifications()
-            ->latest();
-
-        if ($filterType !== 'all' && filled($filterType)) {
-            $notificationsQuery->where('type', $filterType);
-        }
-
-        if ($filterStatus === 'unread') {
-            $notificationsQuery->whereNull('read_at');
-        }
-
-        $notifications = $notificationsQuery
-            ->paginate(15)
-            ->withQueryString();
+        $notifications = $user->notifications()
+            ->latest()
+            ->paginate(15);
 
         $unreadCount = $user->unreadNotifications()->count();
-        $availableTypes = $user->notifications()
-            ->select('type')
-            ->distinct()
-            ->pluck('type')
-            ->filter()
-            ->values();
 
         return view('notifications.index', [
             'notifications' => $notifications,
             'unreadCount' => $unreadCount,
-            'filterType' => $filterType,
-            'filterStatus' => $filterStatus,
-            'availableTypes' => $availableTypes,
         ]);
     }
 
