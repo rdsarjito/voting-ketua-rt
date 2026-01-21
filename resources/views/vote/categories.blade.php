@@ -2,24 +2,24 @@
     <x-slot name="header">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5">
             <div>
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Kategori Voting
+                <h2 class="font-bold text-2xl bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent leading-tight">
+                    🗳️ Kategori Voting
                 </h2>
-                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                <p class="text-sm text-gray-600 dark:text-gray-300 mt-1 font-medium">
                     Pilih salah satu kategori di bawah untuk melihat dan memberikan suara kepada kandidat.
                 </p>
             </div>
-            <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/30 dark:to-emerald-900/30 font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
                     Voting dibuka
                 </span>
-                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-800">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 font-semibold">
                     <span class="w-2 h-2 rounded-full bg-gray-400 dark:bg-gray-500"></span>
                     Voting ditutup
                 </span>
                 <span class="hidden sm:inline text-gray-400">•</span>
-                <span>{{ $categories->count() }} Kategori</span>
+                <span class="font-bold text-indigo-600">{{ $categories->count() }} Kategori</span>
             </div>
         </div>
     </x-slot>
@@ -41,9 +41,9 @@
                 </div>
                 <button 
                     type="submit"
-                    class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-colors shadow-sm hover:shadow"
+                    class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105"
                 >
-                    Cari
+                    🔍 Cari
                 </button>
                 @if($searchQuery ?? false)
                     <a 
@@ -79,18 +79,18 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($categories as $category)
                     <a href="{{ route('vote.category.show', $category) }}"
-                       class="group block bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 p-6 transition-all duration-200 hover:shadow-md hover:border-blue-300 dark:hover:border-blue-600">
+                       class="group block bg-gradient-to-br from-white to-indigo-50 dark:from-gray-800 dark:to-gray-750 rounded-2xl shadow-lg border border-indigo-100 dark:border-gray-700 p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 hover:border-indigo-300 dark:hover:border-indigo-600">
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            <h3 class="text-xl font-bold bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent">
                                 {{ $category->name }}
                             </h3>
                             @if($category->isVotingOpen())
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300">
-                                    Voting dibuka
+                                <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-md">
+                                    ✅ Dibuka
                                 </span>
                             @else
-                                <span class="px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300">
-                                    Voting ditutup
+                                <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-md">
+                                    🔒 Ditutup
                                 </span>
                             @endif
                         </div>
@@ -111,9 +111,9 @@
                             @endif
                         </div>
 
-                        <div class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 text-sm font-medium group-hover:gap-3 transition-all">
-                            Lihat kandidat
-                            <svg class="h-4 w-4 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <div class="inline-flex items-center gap-2 text-sm font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent group-hover:gap-3 transition-all">
+                            👉 Lihat kandidat
+                            <svg class="h-4 w-4 transform transition-transform group-hover:translate-x-1 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                             </svg>
                         </div>

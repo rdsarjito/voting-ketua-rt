@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="bg-gradient-to-r from-white via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-gray-800 dark:to-gray-800 border-b border-indigo-100 dark:border-gray-700 shadow-md">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -28,7 +28,7 @@
                                 {{ __('Notifikasi') }}
                                 <span
                                     id="notification-badge"
-                                    class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-indigo-600 px-2 text-xs font-semibold text-white {{ $unreadCount > 0 ? '' : 'hidden' }}"
+                                    class="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-gradient-to-r from-red-500 to-pink-500 px-2 text-xs font-bold text-white shadow-md animate-pulse {{ $unreadCount > 0 ? '' : 'hidden' }}"
                                 >
                                     {{ $unreadCount }}
                                 </span>
