@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            Riwayat Voting
+        <h2 class="font-bold text-2xl bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent leading-tight">
+            📋 Riwayat Voting
         </h2>
     </x-slot>
 
@@ -9,28 +9,28 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-5">
             <!-- Simple Stats -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between">
+                <div class="bg-gradient-to-br from-white to-indigo-50 dark:from-gray-800 dark:to-gray-750 rounded-xl border border-indigo-100 dark:border-gray-700 p-5 flex items-center justify-between shadow-lg hover:shadow-xl transition-shadow">
                     <div>
-                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Total Vote</p>
-                        <p class="mt-1 text-2xl font-semibold text-gray-900 dark:text-white">
+                        <p class="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wide">Total Vote</p>
+                        <p class="mt-1 text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                             {{ $stats['total_votes'] }}
                         </p>
                     </div>
-                    <div class="w-10 h-10 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-300">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-lg">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-2.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.523 3.806 10.174 9 11.622 5.194-1.448 9-6.099 9-11.622 0-1.043-.133-2.053-.382-3.016z" />
                         </svg>
                     </div>
                 </div>
 
-                <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between">
+                <div class="bg-gradient-to-br from-white to-emerald-50 dark:from-gray-800 dark:to-gray-750 rounded-xl border border-emerald-100 dark:border-gray-700 p-5 flex items-center justify-between shadow-lg hover:shadow-xl transition-shadow">
                     <div>
-                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Kategori Pernah Diikuti</p>
-                        <p class="mt-1 text-2xl font-semibold text-gray-900 dark:text-white">
+                        <p class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">Kategori Pernah Diikuti</p>
+                        <p class="mt-1 text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
                             {{ $stats['categories_voted'] }}
                         </p>
                     </div>
-                    <div class="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600 dark:text-emerald-300">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white shadow-lg">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m4 0h1M5 6h14a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z" />
                         </svg>
@@ -38,32 +38,32 @@
                 </div>
 
                 @if($stats['latest_vote'])
-                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between">
+                    <div class="bg-gradient-to-br from-white to-amber-50 dark:from-gray-800 dark:to-gray-750 rounded-xl border border-amber-100 dark:border-gray-700 p-5 flex items-center justify-between shadow-lg hover:shadow-xl transition-shadow">
                         <div>
-                            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Vote Terakhir</p>
-                            <p class="mt-1 text-sm font-medium text-gray-900 dark:text-white">
+                            <p class="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wide">Vote Terakhir</p>
+                            <p class="mt-1 text-sm font-bold text-gray-900 dark:text-white">
                                 {{ $stats['latest_vote']->format('d M Y, H:i') }}
                             </p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                            <p class="text-xs text-gray-600 dark:text-gray-300 mt-0.5 font-medium">
                                 {{ $stats['latest_vote']->diffForHumans() }}
                             </p>
                         </div>
-                        <div class="w-10 h-10 rounded-full bg-amber-50 dark:bg-amber-900/20 flex items-center justify-center text-amber-600 dark:text-amber-300">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white shadow-lg">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                         </div>
                     </div>
                 @else
-                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 flex items-center justify-between">
+                    <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-750 rounded-xl border border-gray-200 dark:border-gray-700 p-5 flex items-center justify-between shadow-lg">
                         <div>
-                            <p class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">Belum Ada Vote</p>
-                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">
+                            <p class="text-xs font-bold text-gray-600 dark:text-gray-300 uppercase tracking-wide">🚧 Belum Ada Vote</p>
+                            <p class="mt-1 text-sm text-gray-700 dark:text-gray-200 font-medium">
                                 Mulai berpartisipasi dalam voting untuk melihat riwayat di sini.
                             </p>
                         </div>
-                        <a href="{{ route('vote.categories') }}" class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white hover:bg-indigo-700">
-                            Mulai Voting
+                        <a href="{{ route('vote.categories') }}" class="inline-flex items-center px-4 py-2 rounded-lg text-xs font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-md hover:shadow-lg transition-all hover:scale-105">
+                            🚀 Mulai Voting
                         </a>
                     </div>
                 @endif

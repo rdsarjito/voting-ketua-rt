@@ -2,13 +2,13 @@
     <x-slot name="header">
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div>
-                <p class="text-sm text-gray-500">Perbandingan Kandidat</p>
-                <h2 class="font-semibold text-2xl text-gray-800 dark:text-gray-100 leading-tight">
+                <p class="text-sm font-semibold text-indigo-600 dark:text-indigo-400">🔍 Perbandingan Kandidat</p>
+                <h2 class="font-bold text-2xl bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent leading-tight">
                     {{ $category->name }}
                 </h2>
             </div>
-            <a href="{{ route('vote.category.show', $category) }}" class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
-                &larr; Kembali ke daftar kandidat
+            <a href="{{ route('vote.category.show', $category) }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-all">
+                ← Kembali ke daftar kandidat
             </a>
         </div>
     </x-slot>
@@ -20,24 +20,24 @@
 
     <div class="max-w-6xl mx-auto space-y-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm">
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Kandidat</p>
-                <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ $candidates->count() }}</p>
+            <div class="bg-gradient-to-br from-white to-indigo-50 dark:from-gray-800 dark:to-gray-750 rounded-2xl border border-indigo-100 dark:border-gray-700 p-6 shadow-lg hover:shadow-xl transition-shadow">
+                <p class="text-sm text-indigo-600 dark:text-indigo-400 mb-1 font-bold">👥 Total Kandidat</p>
+                <p class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">{{ $candidates->count() }}</p>
             </div>
-            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm">
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Vote Masuk</p>
-                <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ number_format($totalVotes) }}</p>
+            <div class="bg-gradient-to-br from-white to-emerald-50 dark:from-gray-800 dark:to-gray-750 rounded-2xl border border-emerald-100 dark:border-gray-700 p-6 shadow-lg hover:shadow-xl transition-shadow">
+                <p class="text-sm text-emerald-600 dark:text-emerald-400 mb-1 font-bold">🗳️ Total Vote Masuk</p>
+                <p class="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">{{ number_format($totalVotes) }}</p>
             </div>
-            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 p-5 shadow-sm">
-                <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">Status Voting</p>
-                <p class="text-xl font-semibold {{ $category->isVotingOpen() ? 'text-green-600' : 'text-yellow-500' }}">
-                    {{ $category->isVotingOpen() ? 'Sedang Berlangsung' : 'Tidak Aktif' }}
+            <div class="bg-gradient-to-br from-white to-amber-50 dark:from-gray-800 dark:to-gray-750 rounded-2xl border border-amber-100 dark:border-gray-700 p-6 shadow-lg hover:shadow-xl transition-shadow">
+                <p class="text-sm text-amber-600 dark:text-amber-400 mb-1 font-bold">🚦 Status Voting</p>
+                <p class="text-xl font-bold {{ $category->isVotingOpen() ? 'text-green-600' : 'text-red-600' }}">
+                    {{ $category->isVotingOpen() ? '✅ Sedang Berlangsung' : '🔒 Tidak Aktif' }}
                 </p>
             </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 p-8 shadow-lg">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-6">Highlight Kandidat</h3>
+        <div class="bg-gradient-to-br from-white to-purple-50 dark:from-gray-800 dark:to-gray-750 rounded-3xl border border-purple-100 dark:border-gray-700 p-8 shadow-xl">
+            <h3 class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-6">⭐ Highlight Kandidat</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @foreach($candidates as $candidate)
                     @php
@@ -50,10 +50,10 @@
                             <h4 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $candidate->name }}</h4>
                             <div class="flex gap-2">
                                 @if($isLeader)
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-200">Teratas</span>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-md">🏆 Teratas</span>
                                 @endif
                                 @if($isUserChoice)
-                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-200">Pilihan Anda</span>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-md">✅ Pilihan Anda</span>
                                 @endif
                             </div>
                         </div>
@@ -73,8 +73,8 @@
             </div>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-lg p-6">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Detail Perbandingan</h3>
+        <div class="bg-gradient-to-br from-white to-indigo-50 dark:from-gray-800 dark:to-gray-750 rounded-3xl border border-indigo-100 dark:border-gray-700 shadow-xl p-6">
+            <h3 class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">📊 Detail Perbandingan</h3>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm">
                     <thead class="bg-gray-50 dark:bg-gray-900/40">
