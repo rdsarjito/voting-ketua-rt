@@ -37,16 +37,16 @@
         @endif
 
         <!-- Header Section -->
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 mb-6">
+        <div class="bg-gradient-to-br from-white via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-gray-800 dark:to-gray-750 rounded-2xl shadow-xl border border-indigo-200 dark:border-gray-700 p-6 mb-6 hover:shadow-2xl transition-shadow duration-300">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <div class="space-y-1">
-                    <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="flex items-center gap-2 text-sm text-indigo-600 dark:text-indigo-400 font-bold">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <span class="font-semibold">Periode Voting</span>
+                        <span class="font-bold">📅 Periode Voting</span>
                     </div>
-                    <div class="text-base text-gray-900 dark:text-white">
+                    <div class="text-base font-semibold text-gray-900 dark:text-white">
                         {{ $category->voting_start ? $category->voting_start->format('d M Y, H:i') : 'Belum ditentukan' }}
                         <span class="mx-2 text-gray-400">—</span>
                         {{ $category->voting_end ? $category->voting_end->format('d M Y, H:i') : 'Belum ditentukan' }}
@@ -63,15 +63,15 @@
 
         <!-- Search Box -->
         <div class="mb-6">
-            <form method="GET" action="{{ route('vote.category.show', $category) }}" class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+            <form method="GET" action="{{ route('vote.category.show', $category) }}" class="bg-gradient-to-br from-white to-purple-50 dark:from-gray-800 dark:to-gray-750 rounded-2xl shadow-lg border border-purple-100 dark:border-gray-700 p-5">
                 <div class="flex flex-col sm:flex-row gap-3">
                     <div class="flex-1 relative">
                         <input 
                             type="text" 
                             name="search" 
                             value="{{ $searchQuery ?? '' }}"
-                            placeholder="Cari kandidat berdasarkan nama, visi, atau misi..." 
-                            class="w-full px-4 py-3 pl-11 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                            placeholder="🔍 Cari kandidat berdasarkan nama, visi, atau misi..." 
+                            class="w-full px-4 py-3.5 pl-11 border-2 border-indigo-200 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition font-medium"
                         />
                         <svg class="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -79,9 +79,9 @@
                     </div>
                     <button 
                         type="submit"
-                        class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors shadow-sm hover:shadow-md"
+                        class="px-6 py-3.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-xl hover:scale-105"
                     >
-                        Cari
+                        🔍 Cari
                     </button>
                     @if($searchQuery ?? false)
                         <a 
@@ -106,14 +106,14 @@
         <!-- Candidates Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             @foreach($category->candidates as $candidate)
-            <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm hover:shadow-lg hover:border-blue-400 dark:hover:border-blue-600 transition-all duration-300 transform hover:-translate-y-1">
+            <div class="bg-gradient-to-br from-white via-indigo-50 to-purple-50 dark:from-gray-800 dark:via-gray-800 dark:to-gray-750 border-2 border-indigo-200 dark:border-gray-700 rounded-2xl p-6 shadow-xl hover:shadow-2xl hover:border-indigo-400 dark:hover:border-indigo-600 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105">
                 <!-- Photo -->
                 <div class="text-center mb-5">
                     @if($candidate->photo)
-                        <img src="{{ asset('storage/'.$candidate->photo) }}" class="w-24 h-24 rounded-full mx-auto object-cover border-4 border-gray-100 dark:border-gray-700 shadow-md" />
+                        <img src="{{ asset('storage/'.$candidate->photo) }}" class="w-28 h-28 rounded-full mx-auto object-cover border-4 border-white dark:border-gray-600 shadow-xl ring-4 ring-indigo-200 dark:ring-indigo-900" />
                     @else
-                        <div class="w-24 h-24 rounded-full mx-auto bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-700 flex items-center justify-center shadow-md border-4 border-gray-100 dark:border-gray-700">
-                            <svg class="w-10 h-10 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+                        <div class="w-28 h-28 rounded-full mx-auto bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center shadow-xl border-4 border-white dark:border-gray-600 ring-4 ring-indigo-200 dark:ring-indigo-900">
+                            <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
                             </svg>
                         </div>
@@ -121,28 +121,28 @@
                 </div>
 
                 <!-- Name -->
-                <h3 class="text-xl font-bold text-center text-gray-900 dark:text-white mb-4">{{ $candidate->name }}</h3>
+                <h3 class="text-xl font-black text-center bg-gradient-to-r from-indigo-700 to-purple-700 bg-clip-text text-transparent mb-4">👤 {{ $candidate->name }}</h3>
 
                 <!-- Vision & Mission -->
                 <div class="space-y-4 text-sm mb-6">
-                    <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 border-l-3 border-blue-500">
-                        <div class="font-semibold text-blue-700 dark:text-blue-300 mb-1.5 flex items-center gap-1.5">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-4 border-l-4 border-blue-500 shadow-md">
+                        <div class="font-bold text-blue-700 dark:text-blue-300 mb-2 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                             </svg>
-                            Visi
+                            🎯 Visi
                         </div>
-                        <div class="text-gray-700 dark:text-gray-300 leading-relaxed text-xs">{{ Str::limit($candidate->vision, 120) }}</div>
+                        <div class="text-gray-800 dark:text-gray-200 leading-relaxed text-xs font-medium">{{ Str::limit($candidate->vision, 120) }}</div>
                     </div>
-                    <div class="bg-indigo-50 dark:bg-indigo-900/20 rounded-lg p-3 border-l-3 border-indigo-500">
-                        <div class="font-semibold text-indigo-700 dark:text-indigo-300 mb-1.5 flex items-center gap-1.5">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-gradient-to-br from-indigo-50 to-purple-100 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-xl p-4 border-l-4 border-indigo-500 shadow-md">
+                        <div class="font-bold text-indigo-700 dark:text-indigo-300 mb-2 flex items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            Misi
+                            ✅ Misi
                         </div>
-                        <div class="text-gray-700 dark:text-gray-300 leading-relaxed text-xs">{{ Str::limit($candidate->mission, 120) }}</div>
+                        <div class="text-gray-800 dark:text-gray-200 leading-relaxed text-xs font-medium">{{ Str::limit($candidate->mission, 120) }}</div>
                     </div>
                 </div>
 

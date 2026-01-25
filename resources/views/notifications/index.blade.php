@@ -2,8 +2,8 @@
     <div class="max-w-5xl mx-auto space-y-8">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Pusat Notifikasi</h1>
-                <p class="text-sm text-gray-500 dark:text-gray-400">
+                <h1 class="text-3xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">🔔 Pusat Notifikasi</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-300 font-medium mt-1">
                     Pantau aktivitas voting terbaru, perubahan periode, dan tindakan admin secara real-time.
                 </p>
             </div>
@@ -12,13 +12,13 @@
                 @csrf
                 <button
                     type="submit"
-                    class="inline-flex items-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    class="inline-flex items-center rounded-xl border border-transparent bg-gradient-to-r from-indigo-600 to-purple-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 hover:scale-105 transition-all"
                     @if($unreadCount === 0) disabled @endif
                 >
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                     </svg>
-                    <span class="ml-2">Tandai Semua Dibaca</span>
+                    <span class="ml-2">✅ Tandai Semua Dibaca</span>
                 </button>
             </form>
         </div>
@@ -28,23 +28,23 @@
                 @php
                     $isUnread = is_null($notification->read_at);
                     $typeColors = [
-                        'vote_cast' => 'border-emerald-500/70 bg-emerald-50 dark:bg-emerald-500/10',
-                        'admin_action' => 'border-amber-500/70 bg-amber-50 dark:bg-amber-500/10',
-                        'voting_period' => 'border-sky-500/70 bg-sky-50 dark:bg-sky-500/10',
-                        'default' => 'border-gray-400/70 bg-white dark:bg-gray-800',
+                        'vote_cast' => 'border-emerald-500 bg-gradient-to-br from-emerald-50 to-green-100 dark:from-emerald-500/10 dark:to-green-500/10',
+                        'admin_action' => 'border-amber-500 bg-gradient-to-br from-amber-50 to-orange-100 dark:from-amber-500/10 dark:to-orange-500/10',
+                        'voting_period' => 'border-sky-500 bg-gradient-to-br from-sky-50 to-blue-100 dark:from-sky-500/10 dark:to-blue-500/10',
+                        'default' => 'border-gray-400 bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-750',
                     ];
                     $colorClass = $typeColors[$notification->type] ?? $typeColors['default'];
                 @endphp
-                <div class="rounded-2xl border-l-4 {{ $colorClass }} p-5 shadow-sm ring-1 ring-black/5 dark:ring-white/5">
+                <div class="rounded-2xl border-l-4 {{ $colorClass }} p-6 shadow-lg ring-1 ring-black/10 dark:ring-white/10 hover:shadow-xl transition-all duration-300 hover:scale-102">
                     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                             <div class="flex items-center gap-3">
-                                <p class="text-lg font-semibold text-gray-900 dark:text-white">
+                                <p class="text-lg font-black text-gray-900 dark:text-white">
                                     {{ $notification->title }}
                                 </p>
                                 @if($isUnread)
-                                    <span class="inline-flex items-center rounded-full bg-indigo-600/10 px-3 py-1 text-xs font-medium text-indigo-700 dark:text-indigo-300">
-                                        Baru
+                                    <span class="inline-flex items-center rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 px-3 py-1 text-xs font-bold text-white shadow-md animate-pulse">
+                                        ⭐ Baru
                                     </span>
                                 @endif
                             </div>
