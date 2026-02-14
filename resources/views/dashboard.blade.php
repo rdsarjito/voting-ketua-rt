@@ -2,12 +2,12 @@
     <x-slot name="header">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-xs uppercase tracking-wide text-indigo-600 font-semibold">{{ now()->format('l, d F Y') }}</p>
-                <h2 class="font-bold text-3xl bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent leading-tight">
+                <p class="text-xs uppercase tracking-wide text-emerald-600 font-semibold">{{ now()->format('l, d F Y') }}</p>
+                <h2 class="font-bold text-3xl bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent leading-tight">
                     {{ auth()->user()->role === 'admin' ? '🎯 Control Center' : '📊 Progress Pemilihan' }}
                 </h2>
             </div>
-            <a href="{{ route('vote.categories') }}" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200">
+            <a href="{{ route('vote.categories') }}" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200">
                 <span class="text-sm font-semibold">🗳️ Lihat Kategori</span>
             </a>
         </div>
@@ -18,9 +18,9 @@
             @if($mode === 'admin')
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
                     @foreach($metrics as $metric)
-                        <div class="bg-gradient-to-br from-white to-indigo-50 rounded-2xl shadow-lg border border-indigo-100 p-6 hover:shadow-xl transition-shadow duration-200">
-                            <p class="text-sm text-indigo-600 font-semibold">{{ $metric['label'] }}</p>
-                            <p class="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mt-2">{{ number_format($metric['value']) }}</p>
+                        <div class="bg-gradient-to-br from-white to-emerald-50 rounded-2xl shadow-lg border border-emerald-100 p-6 hover:shadow-xl transition-shadow duration-200">
+                            <p class="text-sm text-emerald-600 font-semibold">{{ $metric['label'] }}</p>
+                            <p class="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent mt-2">{{ number_format($metric['value']) }}</p>
                             <p class="text-xs text-gray-500 mt-1">{{ $metric['detail'] }}</p>
                         </div>
                     @endforeach
@@ -28,11 +28,11 @@
 
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
                     <div class="xl:col-span-2 space-y-6">
-                        <div class="bg-gradient-to-br from-white to-purple-50 rounded-2xl shadow-lg border border-purple-100 p-6">
+                        <div class="bg-gradient-to-br from-white to-teal-50 rounded-2xl shadow-lg border border-teal-100 p-6">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <p class="text-sm text-purple-600 font-semibold">Tingkat Partisipasi</p>
-                                    <h3 class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">{{ $turnoutRate ?? 0 }}%</h3>
+                                    <p class="text-sm text-teal-600 font-semibold">Tingkat Partisipasi</p>
+                                    <h3 class="text-4xl font-bold bg-gradient-to-r from-teal-600 to-emerald-600 bg-clip-text text-transparent">{{ $turnoutRate ?? 0 }}%</h3>
                                     <p class="text-xs text-gray-500 mt-1">Persentase pemilih aktif yang sudah memberikan suara</p>
                                 </div>
                                 <div class="relative h-28 w-28">
@@ -40,7 +40,7 @@
                                         <path class="text-gray-200 stroke-current" stroke-width="4" fill="none" d="M18 2.0845
                                             a 15.9155 15.9155 0 0 1 0 31.831
                                             a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                                        <path class="text-purple-600 stroke-current" stroke-width="4" stroke-linecap="round" fill="none"
+                                        <path class="text-teal-600 stroke-current" stroke-width="4" stroke-linecap="round" fill="none"
                                             stroke-dasharray="{{ $turnoutRate ?? 0 }}, 100"
                                             d="M18 2.0845
                                                 a 15.9155 15.9155 0 0 1 0 31.831
@@ -64,10 +64,10 @@
                             <canvas id="categoryChart" height="160"></canvas>
                         </div>
 
-                        <div class="bg-gradient-to-br from-white to-indigo-50 rounded-2xl shadow-lg border border-indigo-100 p-6">
+                        <div class="bg-gradient-to-br from-white to-emerald-50 rounded-2xl shadow-lg border border-emerald-100 p-6">
                             <div class="flex items-center justify-between mb-4">
                                 <div>
-                                    <p class="text-sm text-indigo-600 font-semibold">📈 Suara Masuk 10 Hari Terakhir</p>
+                                    <p class="text-sm text-emerald-600 font-semibold">📈 Suara Masuk 10 Hari Terakhir</p>
                                     <h3 class="text-xl font-bold text-gray-900">Traffic Aktivitas</h3>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                                     <p class="text-sm text-gray-400">Belum ada jadwal aktif.</p>
                                 @endforelse
                             </ul>
-                            <a href="{{ route('admin.categories.index') }}" class="mt-4 inline-flex text-sm font-semibold text-indigo-600 hover:text-purple-600 transition">✨ Kelola Jadwal</a>
+                            <a href="{{ route('admin.categories.index') }}" class="mt-4 inline-flex text-sm font-semibold text-emerald-600 hover:text-teal-600 transition">✨ Kelola Jadwal</a>
                         </div>
 
                         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
@@ -153,7 +153,7 @@
                             </div>
                             <div class="flex-1">
                                 <div class="w-full bg-gray-100 rounded-full h-3">
-                                    <div class="h-3 rounded-full bg-blue-600" style="width: {{ $progress }}%"></div>
+                                    <div class="h-3 rounded-full bg-emerald-600" style="width: {{ $progress }}%"></div>
                                 </div>
                             </div>
                         </div>
@@ -173,7 +173,7 @@
                             </div>
                         </div>
                         <div class="mt-6">
-                            <a href="{{ route('vote.categories') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white shadow hover:bg-blue-700">
+                            <a href="{{ route('vote.categories') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 text-white shadow hover:bg-emerald-700">
                                 Mulai / lanjutkan memilih
                             </a>
                         </div>
@@ -183,11 +183,11 @@
                         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                             <div class="flex items-center justify-between mb-4">
                                 <p class="text-sm text-gray-500">Kategori Aktif</p>
-                                <a href="{{ route('vote.categories') }}" class="text-xs text-blue-600 hover:underline">Lihat Semua</a>
+                                <a href="{{ route('vote.categories') }}" class="text-xs text-emerald-600 hover:underline">Lihat Semua</a>
                             </div>
                             <div class="space-y-3 max-h-80 overflow-y-auto">
                                 @forelse($activeCategories ?? [] as $category)
-                                    <div class="border border-gray-200 rounded-lg p-3 hover:border-blue-300 transition-colors">
+                                    <div class="border border-gray-200 rounded-lg p-3 hover:border-emerald-300 transition-colors">
                                         <div class="flex items-start justify-between gap-2 mb-2">
                                             <div class="flex-1">
                                                 <p class="font-semibold text-sm text-gray-900">{{ $category['name'] }}</p>
@@ -210,7 +210,7 @@
                                         </div>
                                         <a 
                                             href="{{ route('vote.category.show', $category['id']) }}"
-                                            class="inline-flex items-center justify-center w-full mt-2 px-3 py-1.5 text-xs font-medium rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 transition-colors"
+                                            class="inline-flex items-center justify-center w-full mt-2 px-3 py-1.5 text-xs font-medium rounded-lg border border-emerald-600 text-emerald-600 hover:bg-emerald-50 transition-colors"
                                         >
                                             {{ $category['has_voted'] ? 'Lihat Detail' : 'Vote Sekarang' }}
                                         </a>
@@ -256,7 +256,7 @@
                         datasets: [{
                             label: 'Total Suara',
                             data: categoryChartData.votes,
-                            backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                            backgroundColor: 'rgba(16, 185, 129, 0.7)',
                             borderRadius: 8,
                         }]
                     },
